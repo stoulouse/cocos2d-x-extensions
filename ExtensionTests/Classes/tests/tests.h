@@ -7,6 +7,7 @@
 #include "CCMenuItemDynamic/CCMenuItemDynamicTest.h"
 #include "DecoratedBox/DecoratedBoxTest.h"
 #include "CCButton/CCButtonTest.h"
+#include "PSModalAlertTest/PSModalAlertTest.h"
 
 enum
 {
@@ -16,6 +17,7 @@ enum
 	TEST_MENUITEMDINAMIC,
 	TEST_DECORATEDBOX,
 	TEST_CCBUTTON,
+	TEST_PSMODALALERT,
 
     TESTS_COUNT,
 };
@@ -27,6 +29,7 @@ const std::string g_aTestNames[TESTS_COUNT] = {
 	"CCMenuItemDynamicTest",
 	"DecoratedBox",
 	"CCButton",
+	"PSModalAlert",
 };
 
 #endif

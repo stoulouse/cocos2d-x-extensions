@@ -27,6 +27,8 @@ static TestScene* CreateTestScene(int nIdx)
 		pScene = new DecoratedBoxTestScene(); break;
 	case TEST_CCBUTTON:
 		pScene = new CCButtonTestScene(); break;
+	case TEST_PSMODALALERT:
+		pScene = new PSModalAlertTestScene(); break;
     default:
         break;
     }
