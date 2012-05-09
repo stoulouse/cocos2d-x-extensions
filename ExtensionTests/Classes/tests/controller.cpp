@@ -21,6 +21,8 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new AdvanceSpriteScene(); break;
     case TEST_ADVANCE_PARTICLE:
         pScene = new AdvanceParticleTestScene(); break;
+	case TEST_MENUITEMDINAMIC:
+		pScene = new CCMenuItemDynamicTestScene(); break;
     default:
         break;
     }
