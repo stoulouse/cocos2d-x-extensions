@@ -110,7 +110,9 @@
   <ItemGroup>
     <ClCompile Include="..\..\extensions\CCMenuItemDynamic\CCMenuItemDynamic.cpp" />
     <ClCompile Include="..\..\extensions\CCMenuItemDynamic\CCScale9Sprite.cpp" />
+    <ClCompile Include="..\..\extensions\DecoratedBox\DecoratedBox.cpp" />
     <ClCompile Include="..\Classes\tests\CCMenuItemDynamic\CCMenuItemDynamicTest.cpp" />
+    <ClCompile Include="..\Classes\tests\DecoratedBox\DecoratedBoxTest.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\tests\controller.cpp" />
@@ -126,7 +128,9 @@
   <ItemGroup>
     <ClInclude Include="..\..\extensions\CCMenuItemDynamic\CCMenuItemDynamic.h" />
     <ClInclude Include="..\..\extensions\CCMenuItemDynamic\CCScale9Sprite.h" />
+    <ClInclude Include="..\..\extensions\DecoratedBox\DecoratedBox.h" />
     <ClInclude Include="..\Classes\tests\CCMenuItemDynamic\CCMenuItemDynamicTest.h" />
+    <ClInclude Include="..\Classes\tests\DecoratedBox\DecoratedBoxTest.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\tests\controller.h" />

@@ -23,6 +23,8 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new AdvanceParticleTestScene(); break;
 	case TEST_MENUITEMDINAMIC:
 		pScene = new CCMenuItemDynamicTestScene(); break;
+	case TEST_DECORATEDBOX:
+		pScene = new DecoratedBoxTestScene(); break;
     default:
         break;
     }

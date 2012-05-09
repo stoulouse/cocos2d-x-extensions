@@ -1,9 +1,9 @@
 //
-//  AdvanceSpriteTest.cpp
+//  CCMenuItemDynamicTest.cpp
 //  test
 //
-//  Created by varadharaj on 16/06/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Created by Jose Antonio Andujar Clavell on 09/05/2012.
+//  Copyright 2011 JanduSoft. All rights reserved.
 //
 
 #include "CCMenuItemDynamicTest.h"
@@ -36,8 +36,6 @@ CCMenuItemDynamicTest::CCMenuItemDynamicTest()
     m_pMenuItemDynamic->setPosition(ccp(s.width/2,s.height/2));
     
     addChild(m_pMenuItemDynamic);
-    //m_pAdvanceSprite->addFrames("animations/grossini-aliases.plist", "animations/grossini-aliases.png");
-    //m_pAdvanceSprite->startAnimation(1, 14, -1, 0, this, 5, false, false);
 }
 
 void CCMenuItemDynamicTest::onEnter()
@@ -52,7 +50,7 @@ std::string CCMenuItemDynamicTest::title()
 
 CCMenuItemDynamicTest::~CCMenuItemDynamicTest()
 {
-    CC_SAFE_RELEASE(m_pMenuItemDynamic);
+    //CC_SAFE_RELEASE(m_pMenuItemDynamic);
 }
 
 void CCMenuItemDynamicTest::menuCallback(CCObject* pSender)
