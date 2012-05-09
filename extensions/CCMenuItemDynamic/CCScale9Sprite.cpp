@@ -153,72 +153,73 @@ void CCScale9Sprite::draw() {
 
 
 //LabelBMFont - CCRGBAProtocol protocol
-void CCScale9Sprite::setColor(ccColor3B var)
+void CCScale9Sprite::setColor(const ccColor3B& var)
 {
-	m_tColor = var;
-	if (scale9Image->getChildren() && scale9Image->getChildren()->count() != 0)
-	{
-		CCObject* child;
-		CCARRAY_FOREACH(scale9Image->getChildren(), child)
-		{
-			CCSprite* pNode = (CCSprite*) child;
-			if (pNode)
-			{
-				pNode->setColor(m_tColor);
-			}
-		}
-	}
+    m_tColor = var;
+    if (m_pChildren && m_pChildren->count() != 0)
+    {
+        CCObject* child;
+        CCARRAY_FOREACH(m_pChildren, child)
+        {
+            CCSprite* pNode = (CCSprite*) child;
+            if (pNode)
+            {
+                pNode->setColor(m_tColor);
+            }
+        }
+    }
 }
-ccColor3B CCScale9Sprite::getColor()
+const ccColor3B& CCScale9Sprite::getColor()
 {
-	return m_tColor;
+    return m_tColor;
 }
+
 void CCScale9Sprite::setOpacity(GLubyte var)
 {
-	m_cOpacity = var;
-
-	if (scale9Image->getChildren() && scale9Image->getChildren()->count() != 0)
-	{
-		CCObject* child;
-		CCARRAY_FOREACH(scale9Image->getChildren(), child)
-		{
-			CCNode* pNode = (CCNode*) child;
-			if (pNode)
-			{
-				CCRGBAProtocol *pRGBAProtocol = pNode->convertToRGBAProtocol();
-				if (pRGBAProtocol)
-				{
-					pRGBAProtocol->setOpacity(m_cOpacity);
-				}
-			}
-		}
-	}
+    m_cOpacity = var;
+    
+    if (m_pChildren && m_pChildren->count() != 0)
+    {
+        CCObject* child;
+        CCARRAY_FOREACH(m_pChildren, child)
+        {
+            CCNode* pNode = (CCNode*) child;
+            if (pNode)
+            {
+                CCRGBAProtocol *pRGBAProtocol = dynamic_cast<CCRGBAProtocol*>(pNode);
+                if (pRGBAProtocol)
+                {
+                    pRGBAProtocol->setOpacity(m_cOpacity);
+                }
+            }
+        }
+    }
 }
 GLubyte CCScale9Sprite::getOpacity()
 {
-	return m_cOpacity;
+    return m_cOpacity;
 }
 void CCScale9Sprite::setIsOpacityModifyRGB(bool var)
 {
-	m_bIsOpacityModifyRGB = var;
-	if (scale9Image->getChildren() && scale9Image->getChildren()->count() != 0)
-	{
-		CCObject* child;
-		CCARRAY_FOREACH(scale9Image->getChildren(), child)
-		{
-			CCNode* pNode = (CCNode*) child;
-			if (pNode)
-			{
-				CCRGBAProtocol *pRGBAProtocol = pNode->convertToRGBAProtocol();
-				if (pRGBAProtocol)
-				{
-					pRGBAProtocol->setIsOpacityModifyRGB(m_bIsOpacityModifyRGB);
-				}
-			}
-		}
-	}
+    m_bIsOpacityModifyRGB = var;
+    if (m_pChildren && m_pChildren->count() != 0)
+    {
+        CCObject* child;
+        CCARRAY_FOREACH(m_pChildren, child)
+        {
+            CCNode* pNode = (CCNode*) child;
+            if (pNode)
+            {
+                CCRGBAProtocol *pRGBAProtocol = dynamic_cast<CCRGBAProtocol*>(pNode);
+                if (pRGBAProtocol)
+                {
+                    pRGBAProtocol->setIsOpacityModifyRGB(m_bIsOpacityModifyRGB);
+                }
+            }
+        }
+    }
 }
 bool CCScale9Sprite::getIsOpacityModifyRGB()
 {
-	return m_bIsOpacityModifyRGB;
+    return m_bIsOpacityModifyRGB;
 }

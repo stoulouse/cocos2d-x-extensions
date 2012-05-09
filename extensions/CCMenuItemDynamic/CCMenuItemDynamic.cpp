@@ -1,7 +1,7 @@
 #include "CcMenuItemDynamic.h"
 #include "CCScale9Sprite.h"
 using namespace cocos2d;
-CCMenuItemSprite * CCMenuItemDynamic::dynamicItemWithText(const char* text,  const char* font, const CCSize &minSize,  const char*normalImage, const char *selectedImage, SelectorProtocol* target, SEL_MenuHandler selector, const CCRect& centerRegion, GLubyte opacity) {
+CCMenuItemSprite * CCMenuItemDynamic::dynamicItemWithText(const char* text,  const char* font, const CCSize &minSize,  const char*normalImage, const char *selectedImage, CCObject* target, SEL_MenuHandler selector, const CCRect& centerRegion, GLubyte opacity) {
 	  //Create the label
 	  CCLabelBMFont *label = CCLabelBMFont ::labelWithString(text ,font);
 

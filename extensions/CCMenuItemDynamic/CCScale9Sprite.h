@@ -27,7 +27,7 @@ class CCScale9Sprite : 	public CCNode ,CCRGBAProtocol
 	// texture RGBA
 
 	CC_PROPERTY(GLubyte, m_cOpacity, Opacity); 
-	CC_PROPERTY(ccColor3B, m_tColor, Color);
+	CC_PROPERTY_PASS_BY_REF(ccColor3B, m_tColor, Color);
 	CC_PROPERTY(bool, m_bIsOpacityModifyRGB, IsOpacityModifyRGB);
 public:
 	static CCScale9Sprite* scale9SpriteWithFile(const char* file, const CCRect & centreRegion);
