@@ -23,10 +23,13 @@ CCButton::CCButton():CCNode()
 	touchNodes = new CCMutableDictionary<int,CCNode*>();
 	titleCCStrings = new CCMutableDictionary<int,CCString*>();
 	isDisabled = false;
+	CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this, 0, false);
 }
 
 CCButton::~CCButton()
 {
+	CCTouchDispatcher::sharedDispatcher()->removeDelegate(this);
+
 	CC_SAFE_DELETE(backgroundNodes);
 	CC_SAFE_DELETE(touchNodes);
 	CC_SAFE_DELETE(titleCCStrings);
