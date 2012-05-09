@@ -25,6 +25,8 @@ static TestScene* CreateTestScene(int nIdx)
 		pScene = new CCMenuItemDynamicTestScene(); break;
 	case TEST_DECORATEDBOX:
 		pScene = new DecoratedBoxTestScene(); break;
+	case TEST_CCBUTTON:
+		pScene = new CCButtonTestScene(); break;
     default:
         break;
     }

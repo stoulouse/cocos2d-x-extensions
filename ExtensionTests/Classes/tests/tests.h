@@ -6,6 +6,7 @@
 #include "NdCxListTest/NdCxListTest.h"
 #include "CCMenuItemDynamic/CCMenuItemDynamicTest.h"
 #include "DecoratedBox/DecoratedBoxTest.h"
+#include "CCButton/CCButtonTest.h"
 
 enum
 {
@@ -14,6 +15,7 @@ enum
     TEST_ADVANCE_PARTICLE,
 	TEST_MENUITEMDINAMIC,
 	TEST_DECORATEDBOX,
+	TEST_CCBUTTON,
 
     TESTS_COUNT,
 };
@@ -24,6 +26,7 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "AdvanceParticleTest",
 	"CCMenuItemDynamicTest",
 	"DecoratedBox",
+	"CCButton",
 };
 
 #endif
