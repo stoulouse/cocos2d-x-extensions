@@ -30,7 +30,7 @@ class AdvanceSprite : public CCSprite
     
     //Callback funciton pointer.
     SEL_CallFunc m_pfnSelectorDelegate;
-    SelectorProtocol *m_pTarget;
+    CCObject *m_pTarget;
     
     //Frame Rate Calculation variable.
     ccTime m_ElaspeTime;
@@ -74,7 +74,7 @@ public:
      
     ***************************************************************************/
     
-    void startAnimation(int startInd, int endInd, int number_Loop, SEL_CallFunc pfnSelectorDelegate, SelectorProtocol *pTarget,int NumberOfFramesPerSecond, bool NeedToRunReverseAnimation, bool NeedToDeleteItself);
+    void startAnimation(int startInd, int endInd, int number_Loop, SEL_CallFunc pfnSelectorDelegate, CCObject *pTarget,int NumberOfFramesPerSecond, bool NeedToRunReverseAnimation, bool NeedToDeleteItself);
     
     //Running Animation from Current index to Parameter Index.
     void moveTo(int index){ startAnimation(m_CurrentIndex, index, 1, m_pfnSelectorDelegate, m_pTarget, -1, false, m_NeedToDeleteItself);}

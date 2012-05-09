@@ -153,7 +153,7 @@ void AdvanceSprite::update(ccTime dt)
     }
 }
 
-void AdvanceSprite::startAnimation(int startInd, int endInd, int number_Loop, SEL_CallFunc pfnSelectorDelegate, cocos2d::SelectorProtocol *pTarget, int NumberOfFramesPerSecond, bool NeedToRunReverseAnimation, bool NeedToDeleteItself)
+void AdvanceSprite::startAnimation(int startInd, int endInd, int number_Loop, SEL_CallFunc pfnSelectorDelegate, cocos2d::CCObject *pTarget, int NumberOfFramesPerSecond, bool NeedToRunReverseAnimation, bool NeedToDeleteItself)
 {
     if(m_isAnimationRunning)
     {

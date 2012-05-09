@@ -9,6 +9,8 @@
 #include "AdvanceParticleQuadSystem.h"
 #include "platform/CCGL.h"
 #include "CCSpriteFrame.h"
+#include "CCDirector.h"
+
 
 namespace cocos2d {
     
@@ -143,7 +145,6 @@ namespace cocos2d {
     void AdvanceParticleQuadSystem::initTexCoordsWithRect(CCRect pointRect)
     {
         // convert to Tex coords
-        
         CCRect rect = CCRectMake(
                                  pointRect.origin.x * CC_CONTENT_SCALE_FACTOR(),
                                  pointRect.origin.y * CC_CONTENT_SCALE_FACTOR(),

@@ -147,7 +147,7 @@ namespace NdCxControl
         }
 
         list_state_ = LS_TRACKINGTOUCH;
-        CCPoint touchPoint = touch->locationInView(touch->view());
+        CCPoint touchPoint = touch->locationInView();
         old_y_ = inner_panel_->getPosition().y;
         touch_began_y_ = touch_ended_y_ = CCDirector::sharedDirector()->convertToGL(touchPoint).y;
         
@@ -291,7 +291,7 @@ namespace NdCxControl
             return;
         }
 
-        CCPoint touchPoint = touch->locationInView(touch->view());
+        CCPoint touchPoint = touch->locationInView();
         touchPoint = CCDirector::sharedDirector()->convertToGL(touchPoint);         
         touch_ended_y_ = touchPoint.y;
 
@@ -324,7 +324,7 @@ namespace NdCxControl
             return NULL;
         }
 
-        CCPoint touch_loc = touch->locationInView(touch->view());
+        CCPoint touch_loc = touch->locationInView();
         touch_loc = CCDirector::sharedDirector()->convertToGL(touch_loc);
         CCPoint local_loc = inner_panel_->convertToNodeSpace(touch_loc);
 

@@ -19,7 +19,7 @@ void NdCxListTest::onEnter()
     CCLayer::onEnter();
 
     CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-    ccColor4B bg_color = ccc4(230,232,250,255);
+    ccColor4B bg_color = ccc4f(230,232,250,255);
     CCSize lsSize = CCSizeMake(winSize.width, winSize.height - (40*2));
     NdCxList* listview = new NdCxList(30, bg_color, lsSize);
     listview->autorelease();
