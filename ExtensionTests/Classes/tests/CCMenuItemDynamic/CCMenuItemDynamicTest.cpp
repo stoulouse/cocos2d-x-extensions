@@ -32,7 +32,7 @@ CCMenuItemDynamicTest::CCMenuItemDynamicTest()
 
 	CCSize minSize = CCSize(20,20);
 
-	m_pMenuItemDynamic = CCMenuItemDynamic::dynamicItemWithText("Example Text",  "Arial", minSize, "r1.png", "r2.png", this, menu_selector(CCMenuItemDynamicTest::menuCallback));
+	m_pMenuItemDynamic = CCMenuItemDynamic::dynamicItemWithText("Example Text",  "fonts/futura-48.fnt", minSize, "r1.png", "r2.png", this, menu_selector(CCMenuItemDynamicTest::menuCallback));
     m_pMenuItemDynamic->setPosition(ccp(s.width/2,s.height/2));
     
     addChild(m_pMenuItemDynamic);

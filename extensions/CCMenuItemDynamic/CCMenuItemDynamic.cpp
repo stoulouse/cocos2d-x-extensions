@@ -3,8 +3,7 @@
 using namespace cocos2d;
 CCMenuItemSprite * CCMenuItemDynamic::dynamicItemWithText(const char* text,  const char* font, const CCSize &minSize,  const char*normalImage, const char *selectedImage, CCObject* target, SEL_MenuHandler selector, const CCRect& centerRegion, GLubyte opacity) {
 	  //Create the label
-	  //CCLabelBMFont *label = CCLabelBMFont ::labelWithString(text ,font);
-	  CCLabelTTF *label = CCLabelTTF::labelWithString("align left", CCSizeMake(50, 50), CCTextAlignmentLeft, font, 32);
+	  CCLabelBMFont *label = CCLabelBMFont ::labelWithString(text ,font);
 
 	  //Calculate the Dynamic Button size
 	  float minWidth = label->getContentSize().width>minSize.width?label->getContentSize().width:minSize.width;
