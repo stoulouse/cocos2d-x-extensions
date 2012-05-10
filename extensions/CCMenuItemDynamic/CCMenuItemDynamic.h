@@ -1,7 +1,7 @@
 #ifndef CcMenuItemDynamic_h__
 #define CcMenuItemDynamic_h__
 #include "cocos2d.h"
-//  Copyright Eli Yukelzon, base on code by Jose Antonio Andújar Clavell 
+//  Copyright Eli Yukelzon, base on code by Jose Antonio Andœjar Clavell 
 //
 //  License http://creativecommons.org/licenses/by/3.0/
 

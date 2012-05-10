@@ -1,8 +1,9 @@
 /*
- * ModalAlert - Customizable popup dialogs/alerts for Cocos2D-X with 
- * dynamic size
+ * ModalAlert - Customizable popup dialogs/alerts for Cocos2D-X with a dynamic size
+ * 
  *
  * Customization of ModalAlert by Rombos && ParallaxShift by
+ *
  * Jose Antonio Andujar Clavell, JanduSoft
  * http://www.jandusoft.com 
  * http://www.jandujar.com
@@ -37,44 +38,67 @@
  */
 
 #include "cocos2d.h"
+#include "CCScale9Sprite/CCScale9Sprite.h"
 
 
 // This is just a class because the Objective-C version was.  A
-// PSModalAlert will never be instanciated.
+// JACModalAlert will never be instanciated.
 //
 // The one other gotcha' is that your selector targets are *not*
 // retained, so make sure they stick around until the dialog is
 // released.  (Which may be during an autorelease after the dialog
 // disappears.)
 //
-// As the original Objective-C version does, this requires the
-// dialogBox{,-hd,-ipad}.png and dialogButton{,-hd,-ipad}.png resources
-// to be loadable by CCSprite::spriteWithFile().  You can replace
-// them with your own versions that match your color schemes.
-//
 
 class JACModalAlert
 {
 public:
-	static void AskQuestionOnLayer(
-		char const * question,
-		cocos2d::CCLayer *layer,
-		cocos2d::CCObject *yesSelectorTarget,
-		cocos2d::SEL_CallFunc yesSelector,
-		cocos2d::CCObject *noSelectorTarget,
-		cocos2d::SEL_CallFunc noSelector);
-
-	static void ConfirmQuestionOnLayer(
-		char const * question,
-		cocos2d::CCLayer *layer,
-		cocos2d::CCObject *okSelectorTarget,
-		cocos2d::SEL_CallFunc okSelector,
-		cocos2d::CCObject *cancelSelectorTarget,
-		cocos2d::SEL_CallFunc cancelSelector);
-
-	static void TellStatementOnLayer(
-		char const *statement,
-		cocos2d::CCLayer *layer,
-		cocos2d::CCObject *okSelectorTarget,
-		cocos2d::SEL_CallFunc okSelector);
+    //Simplest version, text + 1 button (default backgrounds)
+    static void PopupOnLayer(
+                             cocos2d::CCLayer *layer,
+                             char const * text,
+                             char const * buttonText,
+                             cocos2d::CCObject *buttonSelectorTarget,
+                             cocos2d::SEL_CallFunc buttonSelector);
+    
+    // Text + 2 buttons (default backgrounds)
+    static void PopupOnLayer(
+                             cocos2d::CCLayer *layer,
+                             char const * text,
+                             char const * buttonRightText,
+                             char const * buttonLeftText,
+                             cocos2d::CCObject *buttonRigthSelectorTarget,
+                             cocos2d::SEL_CallFunc buttonRigthSelector,
+                             cocos2d::CCObject *buttonLeftSelectorTarget,
+                             cocos2d::SEL_CallFunc buttonLeftSelector);
+    
+    // Text + 1 button + customizable containers
+    static void PopupOnLayer(
+                             cocos2d::CCLayer *layer,
+                             char const * text,
+                             char const * buttonText,
+                             CCScale9Sprite* popup,
+                             CCScale9Sprite* textContainer,
+                             CCScale9Sprite* button,
+                             CCScale9Sprite* buttonSelected,
+                             cocos2d::CCObject *buttonSelectorTarget,
+                             cocos2d::SEL_CallFunc buttonSelector);
+    
+    // Text + 2 buttons + customizable containers
+	static void PopupOnLayer(
+                             cocos2d::CCLayer *layer,
+                             char const * text,
+                             char const * buttonRightText,
+                             char const * buttonLeftText,
+                             CCScale9Sprite* popup,
+                             CCScale9Sprite* textContainer,
+                             CCScale9Sprite* buttonRight,
+                             CCScale9Sprite* buttonRightSelected,
+                             CCScale9Sprite* buttonLeft,
+                             CCScale9Sprite* buttonLeftSelected,
+                             cocos2d::CCObject *buttonRigthSelectorTarget,
+                             cocos2d::SEL_CallFunc buttonRigthSelector,
+                             cocos2d::CCObject *buttonLeftSelectorTarget,
+                             cocos2d::SEL_CallFunc buttonLeftSelector);
+    
 };

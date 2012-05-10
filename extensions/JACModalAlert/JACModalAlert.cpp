@@ -58,7 +58,7 @@ static void JACModalAlertShowAlert(
 	CCObject *opt2SelectorTarget,
 	SEL_CallFunc opt2Selector);
 
-
+// Taken from PSModalAlert
 // class that implements a black colored layer that will cover the whole screen
 // and eats all touches except within the dialog box child
 class JACCoverLayer: public CCLayerColor
