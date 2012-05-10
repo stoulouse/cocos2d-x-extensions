@@ -29,6 +29,10 @@ static TestScene* CreateTestScene(int nIdx)
 		pScene = new CCButtonTestScene(); break;
 	case TEST_PSMODALALERT:
 		pScene = new PSModalAlertTestScene(); break;
+	case TEST_JACMODALALERT:
+		pScene = new JACModalAlertTestScene(); break;
+	case TEST_TABVIEW:
+		pScene = new CCTabViewTestScene(); break;
     default:
         break;
     }

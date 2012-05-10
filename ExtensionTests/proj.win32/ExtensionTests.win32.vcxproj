@@ -109,13 +109,27 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\extensions\CCButton\CCButton.cpp" />
+    <ClCompile Include="..\..\extensions\CCControlExtension\CCControl.cpp" />
+    <ClCompile Include="..\..\extensions\CCControlExtension\CCControlButton.cpp" />
+    <ClCompile Include="..\..\extensions\CCControlExtension\CCControlColourPicker.cpp" />
+    <ClCompile Include="..\..\extensions\CCControlExtension\CCControlHuePicker.cpp" />
+    <ClCompile Include="..\..\extensions\CCControlExtension\CCControlSaturationBrightnessPicker.cpp" />
+    <ClCompile Include="..\..\extensions\CCControlExtension\CCControlSlider.cpp" />
+    <ClCompile Include="..\..\extensions\CCControlExtension\CCInvocation.cpp" />
+    <ClCompile Include="..\..\extensions\CCControlExtension\CCMenuPassive.cpp" />
+    <ClCompile Include="..\..\extensions\CCControlExtension\CCSpacer.cpp" />
+    <ClCompile Include="..\..\extensions\CCControlExtension\Utils\CCControlUtils.cpp" />
     <ClCompile Include="..\..\extensions\CCMenuItemDynamic\CCMenuItemDynamic.cpp" />
-    <ClCompile Include="..\..\extensions\CCMenuItemDynamic\CCScale9Sprite.cpp" />
+    <ClCompile Include="..\..\extensions\CCScale9Sprite\CCScale9Sprite.cpp" />
+    <ClCompile Include="..\..\extensions\CCTabView\CCTabView.cpp" />
     <ClCompile Include="..\..\extensions\DecoratedBox\DecoratedBox.cpp" />
+    <ClCompile Include="..\..\extensions\JACModalAlert\JACModalAlert.cpp" />
     <ClCompile Include="..\..\extensions\PSModalAlert\PSModalAlert.cpp" />
     <ClCompile Include="..\Classes\tests\CCButton\CCButtonTest.cpp" />
     <ClCompile Include="..\Classes\tests\CCMenuItemDynamic\CCMenuItemDynamicTest.cpp" />
+    <ClCompile Include="..\Classes\tests\CCTabView\CCTabViewTest.cpp" />
     <ClCompile Include="..\Classes\tests\DecoratedBox\DecoratedBoxTest.cpp" />
+    <ClCompile Include="..\Classes\tests\JACModalAlertTest\JACModalAlertTest.cpp" />
     <ClCompile Include="..\Classes\tests\PSModalAlertTest\PSModalAlertTest.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
@@ -131,13 +145,28 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\extensions\CCButton\CCButton.h" />
+    <ClInclude Include="..\..\extensions\CCControlExtension\CCControl.h" />
+    <ClInclude Include="..\..\extensions\CCControlExtension\CCControlButton.h" />
+    <ClInclude Include="..\..\extensions\CCControlExtension\CCControlColourPicker.h" />
+    <ClInclude Include="..\..\extensions\CCControlExtension\CCControlExtensions.h" />
+    <ClInclude Include="..\..\extensions\CCControlExtension\CCControlHuePicker.h" />
+    <ClInclude Include="..\..\extensions\CCControlExtension\CCControlSaturationBrightnessPicker.h" />
+    <ClInclude Include="..\..\extensions\CCControlExtension\CCControlSlider.h" />
+    <ClInclude Include="..\..\extensions\CCControlExtension\CCInvocation.h" />
+    <ClInclude Include="..\..\extensions\CCControlExtension\CCMenuPassive.h" />
+    <ClInclude Include="..\..\extensions\CCControlExtension\CCSpacer.h" />
+    <ClInclude Include="..\..\extensions\CCControlExtension\Utils\CCControlUtils.h" />
     <ClInclude Include="..\..\extensions\CCMenuItemDynamic\CCMenuItemDynamic.h" />
-    <ClInclude Include="..\..\extensions\CCMenuItemDynamic\CCScale9Sprite.h" />
+    <ClInclude Include="..\..\extensions\CCScale9Sprite\CCScale9Sprite.h" />
+    <ClInclude Include="..\..\extensions\CCTabView\CCTabView.h" />
     <ClInclude Include="..\..\extensions\DecoratedBox\DecoratedBox.h" />
+    <ClInclude Include="..\..\extensions\JACModalAlert\JACModalAlert.h" />
     <ClInclude Include="..\..\extensions\PSModalAlert\PSModalAlert.h" />
     <ClInclude Include="..\Classes\tests\CCButton\CCButtonTest.h" />
     <ClInclude Include="..\Classes\tests\CCMenuItemDynamic\CCMenuItemDynamicTest.h" />
+    <ClInclude Include="..\Classes\tests\CCTabView\CCTabViewTest.h" />
     <ClInclude Include="..\Classes\tests\DecoratedBox\DecoratedBoxTest.h" />
+    <ClInclude Include="..\Classes\tests\JACModalAlertTest\JACModalAlertTest.h" />
     <ClInclude Include="..\Classes\tests\PSModalAlertTest\PSModalAlertTest.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="..\Classes\AppDelegate.h" />

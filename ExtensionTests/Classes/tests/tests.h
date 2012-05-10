@@ -8,6 +8,8 @@
 #include "DecoratedBox/DecoratedBoxTest.h"
 #include "CCButton/CCButtonTest.h"
 #include "PSModalAlertTest/PSModalAlertTest.h"
+#include "JACModalAlertTest/JACModalAlertTest.h"
+#include "CCTabView/CCTabViewTest.h"
 
 enum
 {
@@ -18,6 +20,8 @@ enum
 	TEST_DECORATEDBOX,
 	TEST_CCBUTTON,
 	TEST_PSMODALALERT,
+	TEST_JACMODALALERT,
+	TEST_TABVIEW,
 
     TESTS_COUNT,
 };
@@ -30,6 +34,8 @@ const std::string g_aTestNames[TESTS_COUNT] = {
 	"DecoratedBox",
 	"CCButton",
 	"PSModalAlert",
+	"JACModalAlert",
+	"CCTabViewTest",
 };
 
 #endif

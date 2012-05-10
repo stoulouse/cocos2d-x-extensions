@@ -46,7 +46,7 @@ void PSModalAlertTest::onEnter()
 
 std::string PSModalAlertTest::title()
 {
-    return "CCButton Test";
+    return "PSModalAlert Test";
 }
 
 PSModalAlertTest::~PSModalAlertTest()

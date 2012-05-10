@@ -14,13 +14,13 @@ CCMenuItemSprite * CCMenuItemDynamic::dynamicItemWithText(const char* text,  con
 	  label->setPosition(ccp(size.width*0.5f, size.height*0.5f));
 
 	  //Sprite normal
-	  CCScale9Sprite *normalSprite = CCScale9Sprite::scale9SpriteWithFile(normalImage, centerRegion);	
+	  CCScale9Sprite *normalSprite = CCScale9Sprite::spriteWithFile(normalImage);
 	  normalSprite ->setContentSize(size);
 	  normalSprite ->setOpacity(opacity);
 	  //Sprite selected
 	  CCScale9Sprite *selectedSprite = NULL;
 	  if(selectedImage){
-		  selectedSprite = CCScale9Sprite::scale9SpriteWithFile(selectedImage, centerRegion);	
+		  selectedSprite = CCScale9Sprite::spriteWithFile(selectedImage);
 		  selectedSprite ->setContentSize(size);
 		  selectedSprite->setOpacity(opacity);
 	  }
