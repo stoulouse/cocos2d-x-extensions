@@ -9,5 +9,6 @@
 #include "CCControlSlider.h"
 #include "CCMenuPassive.h"
 #include "CCSpacer.h"
+#include "CCControlSwitch.h"
 
 #endif

@@ -115,6 +115,7 @@
     <ClCompile Include="..\..\extensions\CCControlExtension\CCControlHuePicker.cpp" />
     <ClCompile Include="..\..\extensions\CCControlExtension\CCControlSaturationBrightnessPicker.cpp" />
     <ClCompile Include="..\..\extensions\CCControlExtension\CCControlSlider.cpp" />
+    <ClCompile Include="..\..\extensions\CCControlExtension\CCControlSwitch.cpp" />
     <ClCompile Include="..\..\extensions\CCControlExtension\CCInvocation.cpp" />
     <ClCompile Include="..\..\extensions\CCControlExtension\CCMenuPassive.cpp" />
     <ClCompile Include="..\..\extensions\CCControlExtension\CCSpacer.cpp" />
@@ -152,6 +153,7 @@
     <ClInclude Include="..\..\extensions\CCControlExtension\CCControlHuePicker.h" />
     <ClInclude Include="..\..\extensions\CCControlExtension\CCControlSaturationBrightnessPicker.h" />
     <ClInclude Include="..\..\extensions\CCControlExtension\CCControlSlider.h" />
+    <ClInclude Include="..\..\extensions\CCControlExtension\CCControlSwitch.h" />
     <ClInclude Include="..\..\extensions\CCControlExtension\CCInvocation.h" />
     <ClInclude Include="..\..\extensions\CCControlExtension\CCMenuPassive.h" />
     <ClInclude Include="..\..\extensions\CCControlExtension\CCSpacer.h" />
