@@ -33,7 +33,7 @@ PSModalAlertTest::PSModalAlertTest()
 
 void PSModalAlertTest::onEnter()
 {
-    
+	CCLayer::onEnter();
 }
 
 std::string PSModalAlertTest::title()
@@ -48,5 +48,5 @@ PSModalAlertTest::~PSModalAlertTest()
 
 void PSModalAlertTest::menuCallback()
 {
-	CCLog("Modal pushed");
+	//CCLog("Modal pushed");
 }

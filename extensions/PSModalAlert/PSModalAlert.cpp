@@ -328,7 +328,8 @@ void PSModalAlertCloseAlert(
 			CCFadeTo::actionWithDuration(kAnimationTime, 0.0f),
 			CCCallFunc::actionWithTarget(
 				wdb,
-				SEL_CallFunc(&PSWhenDoneBlock::Execute) )
+				SEL_CallFunc(&PSWhenDoneBlock::Execute) ),
+				0
 		) );
 }
 
@@ -481,7 +482,7 @@ void PSModalAlertShowAlert(
 			CCScaleTo::actionWithDuration(
 				kAnimationTime,
 				1.0f)
-		) );
+		) );	
 }
 
 
