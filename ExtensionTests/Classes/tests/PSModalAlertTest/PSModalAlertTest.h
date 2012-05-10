@@ -13,6 +13,8 @@
 
 class PSModalAlertTest : public cocos2d::CCLayer
 {  
+protected:
+	int currentTest;
 public:
     PSModalAlertTest();
     ~PSModalAlertTest();

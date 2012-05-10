@@ -10,6 +10,12 @@
 
 using namespace cocos2d;
 
+enum
+{
+    TEST_ASK = 0,
+	TEST_CONFIRM,
+	TEST_TELL,
+};
 
 void PSModalAlertTestScene::runThisTest()
 {
@@ -28,7 +34,9 @@ PSModalAlertTest::PSModalAlertTest()
 	addChild(label, 0);
 	label->setPosition( ccp(s.width/2, s.height-50) );
    
-	PSModalAlert::TellStatementOnLayer("bla,bla,bla,",this,this,callfunc_selector(PSModalAlertTest::menuCallback));
+	currentTest = TEST_ASK;
+
+	menuCallback();
 }
 
 void PSModalAlertTest::onEnter()
@@ -48,5 +56,21 @@ PSModalAlertTest::~PSModalAlertTest()
 
 void PSModalAlertTest::menuCallback()
 {
-	//CCLog("Modal pushed");
+	switch(currentTest){
+		case TEST_ASK:
+			PSModalAlert::AskQuestionOnLayer("bla,bla,bla,question",this,this,callfunc_selector(PSModalAlertTest::menuCallback),this,callfunc_selector(PSModalAlertTest::menuCallback));
+			currentTest++;
+		break;
+		case TEST_CONFIRM:
+			PSModalAlert::ConfirmQuestionOnLayer("bla,bla,bla,confirm",this,this,callfunc_selector(PSModalAlertTest::menuCallback),this,callfunc_selector(PSModalAlertTest::menuCallback));
+			currentTest++;
+		break;
+		case TEST_TELL:
+			PSModalAlert::TellStatementOnLayer("bla,bla,bla,Tell",this,this,callfunc_selector(PSModalAlertTest::menuCallback));
+			currentTest++;
+		break;
+		default:
+			CCLog("Done");
+			break;
+	}
 }
