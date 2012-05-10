@@ -31,7 +31,7 @@
 
 #include "cocos2d.h"
 #include "CCInvocation.h"
-#include "Utils\CCControlUtils.h"
+#include "Utils/CCControlUtils.h"
 USING_NS_CC;
 
 

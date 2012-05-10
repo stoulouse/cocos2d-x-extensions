@@ -25,7 +25,7 @@
  * Converted to c++ / cocos2d-x by starfair
  */
 
-#include "CCControlExtension\CCControlSwitch.h"
+#include "CCControlExtension/CCControlSwitch.h"
 
 CCControlSwitch::~CCControlSwitch()
 {

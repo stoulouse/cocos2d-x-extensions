@@ -251,7 +251,7 @@ namespace cocos2d
 		CCTargetedTouchHandler* handler = (CCTargetedTouchHandler*)CCTouchDispatcher::sharedDispatcher()->findHandler(this);		
 		if (handler)
 		{
-			NSMutableSet* claimedTouches = handler->getClaimedTouches();
+			CCSet* claimedTouches = handler->getClaimedTouches();
 			if (!claimedTouches->containsObject(pTouch))
 			{
 				claimedTouches->addObject(pTouch);
@@ -299,7 +299,7 @@ namespace cocos2d
 		else
 			return false;
 
-		CCPoint touchPoint = pTouch->locationInView(pTouch->view());
+		CCPoint touchPoint = pTouch->locationInView();
 		touchPoint = CCDirector::sharedDirector()->convertToGL(touchPoint);
 
 		m_fStartSwipe = touchPoint.x;
@@ -313,7 +313,7 @@ namespace cocos2d
 		if(m_pScrollTouch != pTouch)
 			return;
 
-		CCPoint touchPoint = pTouch->locationInView(pTouch->view());
+		CCPoint touchPoint = pTouch->locationInView();
 		touchPoint = CCDirector::sharedDirector()->convertToGL(touchPoint);
 
 		// If finger is dragged for more distance then minimum - start sliding and cancel pressed buttons.
@@ -353,7 +353,7 @@ namespace cocos2d
 
 		m_pScrollTouch = NULL;
 
-		CCPoint touchPoint = pTouch->locationInView(pTouch->view());
+		CCPoint touchPoint = pTouch->locationInView();
 		touchPoint = CCDirector::sharedDirector()->convertToGL(touchPoint);
 
 		unsigned int selectedPage = m_uCurrentScreen;
