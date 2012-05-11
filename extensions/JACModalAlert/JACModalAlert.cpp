@@ -40,6 +40,12 @@ USING_NS_CC;
 #define kDialogImg "dialogBox.png"
 #define kButtonImg "dialogButton.png"
 #define kFontName "MarkerFelt-Thin"
+#define kPopuImg "popupBackground.png"
+#define kPopupButtonImg "popupButton.png"
+#define kPopupContainerImg "popupContainer.png"
+#define kFont "fonts/futura-48.fnt"
+#define kMarging 40
+#define kSeparation 60
 
 // Local function declarations
 static void JACModalAlertCloseAlert(
@@ -485,47 +491,129 @@ void JACModalAlertShowAlert(
 		) );	
 }
 
-
-
-void JACModalAlert::AskQuestionOnLayer(
-	char const * question,
-	CCLayer *layer,
-	CCObject *yesSelectorTarget,
-	SEL_CallFunc yesSelector,
-	CCObject *noSelectorTarget,
-	SEL_CallFunc noSelector)
-{
-	JACModalAlertShowAlert(
-		question,
-		layer,
-		"Yes", yesSelectorTarget, yesSelector,
-		"No", noSelectorTarget, noSelector);
+// Text + 2 buttons + customizable containers
+void JACModalAlert::PopupOnLayer(
+                         cocos2d::CCLayer *layer,
+                         char const * text,
+                         char const * buttonRightText,
+                         char const * buttonLeftText,
+                         CCScale9Sprite* popup,
+                         CCScale9Sprite* textContainer,
+                         CCScale9Sprite* buttonRight,
+                         CCScale9Sprite* buttonRightSelected,
+                         CCScale9Sprite* buttonLeft,
+                         CCScale9Sprite* buttonLeftSelected,
+                         cocos2d::CCObject *buttonRigthSelectorTarget,
+                         cocos2d::SEL_CallFunc buttonRigthSelector,
+                         cocos2d::CCObject *buttonLeftSelectorTarget,
+                         cocos2d::SEL_CallFunc buttonLeftSelector){
+    //Only stricted variables
+    CC_ASSERT(layer);
+    CC_ASSERT(text);
+    CC_ASSERT(buttonRightText);
+    CC_ASSERT(popup);
+    CC_ASSERT(buttonRight);
+    CC_ASSERT(buttonRigthSelectorTarget);
+    CC_ASSERT(buttonRigthSelector);
+    
+    float maxWidth=0;
+    float maxHeight=0;
+    
+    // Create the cover layer that "hides" the current application.
+	CCLayerColor *coverLayer = JACCoverLayer::node();
+	CC_ASSERT(coverLayer);
+    
+	// Tag for later validation.
+	coverLayer->setTag(kCoverLayerTag);
+    
+	// put to the very top to block application touches.
+	layer->addChild(coverLayer, INT_MAX);
+    
+	// Smooth fade-in to dim with semi-transparency.
+	coverLayer->runAction(
+                          CCFadeTo::actionWithDuration(kAnimationTime, 80) );
+    
+    //Create the text with font
+    CCLabelBMFont *labelText = CCLabelBMFont ::labelWithString(text ,kFont);
+    maxWidth = labelText->getContentSize().width;
+    maxHeight = labelText->getContentSize().height;
+    
+    if(textContainer != NULL){
+        
+    }
 }
 
-void JACModalAlert::ConfirmQuestionOnLayer(
-	char const * question,
-	CCLayer *layer,
-	CCObject *okSelectorTarget,
-	SEL_CallFunc okSelector,
-	CCObject *cancelSelectorTarget,
-	SEL_CallFunc cancelSelector)
-{
-	JACModalAlertShowAlert(
-		question,
-		layer,
-		"Okay", okSelectorTarget, okSelector,
-		"Cancel", cancelSelectorTarget, cancelSelector);
+
+// Text + 1 button + customizable containers
+void JACModalAlert::PopupOnLayer(
+                         cocos2d::CCLayer *layer,
+                         char const * text,
+                         char const * buttonText,
+                         CCScale9Sprite* popup,
+                         CCScale9Sprite* textContainer,
+                         CCScale9Sprite* button,
+                         CCScale9Sprite* buttonSelected,
+                         cocos2d::CCObject *buttonSelectorTarget,
+                         cocos2d::SEL_CallFunc buttonSelector){
+    CC_ASSERT(layer);
+    CC_ASSERT(text);
+    CC_ASSERT(buttonText);
+    CC_ASSERT(popup);
+    CC_ASSERT(textContainer);
+    CC_ASSERT(button);
+    CC_ASSERT(buttonSelected);
+    CC_ASSERT(buttonSelectorTarget);
+    CC_ASSERT(buttonSelector);
+    
+    PopupOnLayer(layer, text, buttonText, NULL, popup, textContainer, button, NULL, NULL, NULL, buttonSelectorTarget, buttonSelector, NULL, NULL);
+    
 }
 
-void JACModalAlert::TellStatementOnLayer(
-	char const * statement,
-	CCLayer *layer,
-	CCObject *selectorTarget,
-	SEL_CallFunc selector)
-{
-	JACModalAlertShowAlert(
-		statement,
-		layer,
-		"Okay", selectorTarget, selector,
-		NULL, NULL, NULL);
+// Text + 2 buttons (default backgrounds)
+void JACModalAlert::PopupOnLayer(
+                         cocos2d::CCLayer *layer,
+                         char const * text,
+                         char const * buttonRightText,
+                         char const * buttonLeftText,
+                         cocos2d::CCObject *buttonRigthSelectorTarget,
+                         cocos2d::SEL_CallFunc buttonRigthSelector,
+                         cocos2d::CCObject *buttonLeftSelectorTarget,
+                         cocos2d::SEL_CallFunc buttonLeftSelector){
+    CC_ASSERT(layer);
+    CC_ASSERT(text);
+    CC_ASSERT(buttonRightText);
+    CC_ASSERT(buttonLeftText);
+    CC_ASSERT(buttonRigthSelectorTarget);
+    CC_ASSERT(buttonRigthSelector);
+    CC_ASSERT(buttonLeftSelectorTarget);
+    CC_ASSERT(buttonLeftSelector);
+    
+    CCScale9Sprite *popup = CCScale9Sprite::spriteWithFile(kPopuImg);
+    CCScale9Sprite *textContainer = CCScale9Sprite::spriteWithFile(kPopupContainerImg);
+    CCScale9Sprite *button = CCScale9Sprite::spriteWithFile(kPopupButtonImg);
+    CCScale9Sprite *button2 = CCScale9Sprite::spriteWithFile(kPopupButtonImg);
+    
+    PopupOnLayer(layer, text, buttonRightText, buttonLeftText, popup, textContainer, button, NULL, button2, NULL, buttonRigthSelectorTarget, buttonRigthSelector, buttonLeftSelectorTarget, buttonLeftSelector);
+    
+}
+
+void JACModalAlert::PopupOnLayer(
+                         cocos2d::CCLayer *layer,
+                         char const * text,
+                         char const * buttonText,
+                         cocos2d::CCObject *buttonSelectorTarget,
+                         cocos2d::SEL_CallFunc buttonSelector){
+    CC_ASSERT(layer);
+    CC_ASSERT(text);
+    CC_ASSERT(buttonText);
+    CC_ASSERT(buttonSelectorTarget);
+    CC_ASSERT(buttonSelector);
+    
+    CCScale9Sprite *popup = CCScale9Sprite::spriteWithFile(kPopuImg);
+    CCScale9Sprite *textContainer = CCScale9Sprite::spriteWithFile(kPopupContainerImg);
+    CCScale9Sprite *button = CCScale9Sprite::spriteWithFile(kPopupButtonImg);
+    
+    PopupOnLayer(layer, text, buttonText, NULL, popup, textContainer, button, NULL, NULL, NULL, buttonSelectorTarget, buttonSelector, NULL, NULL);
+
+    
 }
