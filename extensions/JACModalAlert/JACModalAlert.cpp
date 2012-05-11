@@ -31,6 +31,7 @@
 
 #include "cocos2d.h"
 #include "JACModalAlert.h"
+#include "CCControlExtension/CCControlButton.h"
 
 USING_NS_CC;
 
@@ -46,23 +47,6 @@ USING_NS_CC;
 #define kFont "fonts/futura-48.fnt"
 #define kMarging 40
 #define kSeparation 60
-
-// Local function declarations
-static void JACModalAlertCloseAlert(
-	CCNode *alertDialog,
-	CCLayer *coverLayer,
-	CCObject *doneSelectorTarget,
-	SEL_CallFunc doneSelector);
-
-static void JACModalAlertShowAlert(
-	char const *message,
-	CCLayer *layer,
-	char const *opt1,
-	CCObject *opt1SelectorTarget,
-	SEL_CallFunc opt1Selector,
-	char const *opt2,
-	CCObject *opt2SelectorTarget,
-	SEL_CallFunc opt2Selector);
 
 // Taken from PSModalAlert
 // class that implements a black colored layer that will cover the whole screen
@@ -103,6 +87,26 @@ public:
 			true); // swallows touches.
 	}
 };
+
+/*
+// Local function declarations
+static void JACModalAlertCloseAlert(
+	CCNode *alertDialog,
+	CCLayer *coverLayer,
+	CCObject *doneSelectorTarget,
+	SEL_CallFunc doneSelector);
+
+static void JACModalAlertShowAlert(
+	char const *message,
+	CCLayer *layer,
+	char const *opt1,
+	CCObject *opt1SelectorTarget,
+	SEL_CallFunc opt1Selector,
+	char const *opt2,
+	CCObject *opt2SelectorTarget,
+	SEL_CallFunc opt2Selector);
+
+
 
 // Replaces the use of blocks, since C++ doesn't have those.
 //
@@ -491,6 +495,7 @@ void JACModalAlertShowAlert(
 		) );	
 }
 
+*/
 // Text + 2 buttons + customizable containers
 void JACModalAlert::PopupOnLayer(
                          cocos2d::CCLayer *layer,
@@ -533,18 +538,116 @@ void JACModalAlert::PopupOnLayer(
 	coverLayer->runAction(
                           CCFadeTo::actionWithDuration(kAnimationTime, 80) );
     
+	//Create the inner objects
+
     //Create the text with font
     CCLabelBMFont *labelText = CCLabelBMFont ::labelWithString(text ,kFont);
     maxWidth = labelText->getContentSize().width;
     maxHeight = labelText->getContentSize().height;
     
-    if(textContainer != NULL){
-        
+	//Resize the container for the text
+	if(textContainer != NULL){
+		maxWidth+=2*kMarging;
+		maxHeight*=2*kMarging;
+		textContainer->setContentSize(CCSizeMake(maxWidth,maxHeight));
+		textContainer->addChild(labelText);
+
+		//Add the label to the container
+		CCSize const & tsz = textContainer->getContentSize();
+		CCPoint post(tsz.width, tsz.height);
+		labelText->setPosition( ccpMult(post, 0.5f));
     }
+
+	//Create the first button
+	CCLabelBMFont *button1Label = CCLabelBMFont ::labelWithString(buttonRightText ,kFont);
+	CCControlButton* button1 = CCControlButton::buttonWithLabelAndBackgroundSprite(button1Label,buttonRight);
+
+	if(buttonRightSelected != NULL){
+		button1->setBackgroundSpriteForState(buttonRightSelected, CCControlStateHighlighted);
+	}
+
+	if( ( button1->getContentSize().width) > maxWidth){
+		maxWidth = button1->getContentSize().width;
+	}
+
+	maxHeight+=kSeparation+button1->getContentSize().height;
+	float buttonHeight = button1->getContentSize().height;
+
+	CCControlButton* button2=NULL;
+
+	//Create the second button (optional)
+	if(buttonLeft!=NULL){
+		CCLabelBMFont *button2Label = CCLabelBMFont ::labelWithString(buttonLeftText ,kFont);
+		button2 = CCControlButton::buttonWithLabelAndBackgroundSprite(button2Label,buttonLeft);
+
+		if(buttonLeftSelected != NULL){
+			button2->setBackgroundSpriteForState(buttonLeftSelected, CCControlStateHighlighted);
+		}
+
+		if( ( button1->getContentSize().width +button2->getContentSize().width + kSeparation ) > maxWidth){
+			maxWidth = button1->getContentSize().width +button2->getContentSize().width + kSeparation;
+		}
+
+		// Height of button1 must be equal to button2 or we must change the maxHeight
+		if( button2->getContentSize().height > button1->getContentSize().height){
+			maxHeight-= button1->getContentSize().height;
+			maxHeight+= button2->getContentSize().height;
+			buttonHeight = button2->getContentSize().height;
+		}
+	}
+
+	maxWidth+=2*kMarging;
+	maxHeight+=2*kMarging;
+
+	//Create the popup dialog
+	popup->setContentSize(CCSizeMake(maxWidth,maxHeight));
+
+	//add components to popup
+
+	//add the text
+	if(textContainer != NULL){
+		popup->addChild(textContainer);
+		//TODO: Position of the label
+	}else{
+		popup->addChild(labelText);
+		//TODO: Position of the label
+	}
+
+	//add buttons
+	if(button2!=NULL){
+		//Two buttons
+		//TODO:Position of the buttons
+		popup->addChild(button1);
+		popup->addChild(button2);
+	}else{
+		//One Button
+		//TODO:Position of the buttons
+		popup->addChild(button1);
+	}
+
+
+	//Add the popup to the cover layer
+	CCSize const & sz = coverLayer->getContentSize();
+	CCPoint pos(sz.width, sz.height);
+
+	popup->setTag(kDialogTag);
+	popup->setPosition( ccpMult(pos, 0.5f) );
+	popup->setOpacity(220); // Make it a bit transparent for a cooler look.
+
+	coverLayer->addChild(popup);
+
+	// Open the dialog with a nice popup-effect
+	popup->setScale(0.0f);
+	popup->runAction(
+		CCEaseBackOut::actionWithAction(
+			CCScaleTo::actionWithDuration(
+				kAnimationTime,
+				1.0f)
+		) );
 }
 
 
-// Text + 1 button + customizable containers
+// Text + 1 button + customizable colors
 void JACModalAlert::PopupOnLayer(
                          cocos2d::CCLayer *layer,
                          char const * text,
@@ -569,7 +672,7 @@ void JACModalAlert::PopupOnLayer(
     
 }
 
-// Text + 2 buttons (default backgrounds)
+// Text + 2 buttons (default colors)
 void JACModalAlert::PopupOnLayer(
                          cocos2d::CCLayer *layer,
                          char const * text,
@@ -597,6 +700,7 @@ void JACModalAlert::PopupOnLayer(
     
 }
 
+// Text + 1 button (default colors)
 void JACModalAlert::PopupOnLayer(
                          cocos2d::CCLayer *layer,
                          char const * text,
