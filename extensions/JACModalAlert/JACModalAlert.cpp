@@ -45,8 +45,8 @@ USING_NS_CC;
 #define kPopupButtonImg "popupButton.png"
 #define kPopupContainerImg "popupContainer.png"
 #define kFont "fonts/futura-48.fnt"
-#define kMarging 40
-#define kSeparation 60
+#define kMarging 10
+#define kSeparation 20
 
 // Taken from PSModalAlert
 // class that implements a black colored layer that will cover the whole screen
@@ -88,25 +88,13 @@ public:
 	}
 };
 
-/*
+
 // Local function declarations
 static void JACModalAlertCloseAlert(
 	CCNode *alertDialog,
 	CCLayer *coverLayer,
 	CCObject *doneSelectorTarget,
 	SEL_CallFunc doneSelector);
-
-static void JACModalAlertShowAlert(
-	char const *message,
-	CCLayer *layer,
-	char const *opt1,
-	CCObject *opt1SelectorTarget,
-	SEL_CallFunc opt1Selector,
-	char const *opt2,
-	CCObject *opt2SelectorTarget,
-	SEL_CallFunc opt2Selector);
-
-
 
 // Replaces the use of blocks, since C++ doesn't have those.
 //
@@ -343,159 +331,6 @@ void JACModalAlertCloseAlert(
 		) );
 }
 
-
-
-void JACModalAlertShowAlert(
-	char const *message,
-	CCLayer *layer,
-	char const *opt1,
-	CCObject *opt1SelectorTarget,
-	SEL_CallFunc opt1Selector,
-	char const *opt2,
-	CCObject *opt2SelectorTarget,
-	SEL_CallFunc opt2Selector)
-{
-	CC_ASSERT(message);
-	CC_ASSERT(layer);
-
-	// Create the cover layer that "hides" the current application.
-	CCLayerColor *coverLayer = JACCoverLayer::node();
-	CC_ASSERT(coverLayer);
-
-	// Tag for later validation.
-	coverLayer->setTag(kCoverLayerTag);
-
-	// put to the very top to block application touches.
-	layer->addChild(coverLayer, INT_MAX);
-
-	// Smooth fade-in to dim with semi-transparency.
-	coverLayer->runAction(
-		CCFadeTo::actionWithDuration(kAnimationTime, 80) );
-
-	// Open the dialog
-	CCSprite *dialog = CCSprite::spriteWithFile(kDialogImg);
-	CC_ASSERT(dialog);
-
-	CCSize const & sz = coverLayer->getContentSize();
-	CCPoint pos(sz.width, sz.height);
-
-	dialog->setTag(kDialogTag);
-	dialog->setPosition( ccpMult(pos, 0.5f) );
-	dialog->setOpacity(220); // Make it a bit transparent for a cooler look.
-
-
-	// Add the alert text.
-	CCSize const & dialogSize = dialog->getContentSize();
-	CCSize const msgSize(
-		dialogSize.width * 0.9f,
-		dialogSize.height * 0.55f);
-	// Trying to replace UI_USER_INTERFACE_IDIOM() == IPAD
-	CCSize const winSize = CCDirector::sharedDirector()->getWinSize();
-	bool const isiPad = (winSize.width >= 1024.0f) ||
-	                    (winSize.height >= 1024.0f);
-	float const fontSize =  ( isiPad ? 42 : 30 );
-
-	CCLabelTTF *dialogMsg = CCLabelTTF::labelWithString(
-		message,
-		msgSize,
-		CCTextAlignmentCenter,
-		kFontName,
-		fontSize);
-	CC_ASSERT(dialogMsg);
-	// dialogMsg->setAnchorPoint(CCPointZero);
-	pos = ccp(dialogSize.width, dialogSize.height);
-	pos = ccpMult(pos, 0.5f);
-	dialogMsg->setPosition(pos);
-	dialogMsg->setColor(ccBLACK);
-	dialog->addChild(dialogMsg);
-
-	// add one or two buttons, as needed
-
-	// The following is to replace the Objective-C block
-	// in the original.
-	JACCloseAndCallBlock *cncb = JACCloseAndCallBlock::closeAndCallBlockWithOptions(
-		coverLayer,
-		opt1SelectorTarget,
-		opt1Selector);
-	CC_ASSERT(cncb);
-
-	CCMenuItemSprite *opt1Button = CCMenuItemSprite::itemFromNormalSprite(
-		CCSprite::spriteWithFile(kButtonImg),
-		CCSprite::spriteWithFile(kButtonImg),
-		cncb,
-		SEL_MenuHandler(&JACCloseAndCallBlock::Execute) );
-	CC_ASSERT(opt1Button);
-	pos.x = dialog->getTextureRect().size.width;
-	if (opt2)
-		pos.x *= 0.27f;
-	else pos.x *= 0.5f;
-	pos.y = opt1Button->getContentSize().height * 0.8f;
-	opt1Button->setPosition(pos);
-
-	CCLabelTTF *opt1Label = CCLabelTTF::labelWithString(
-		opt1,
-		opt1Button->getContentSize(),
-		CCTextAlignmentCenter,
-		kFontName,
-		fontSize);
-	opt1Label->setAnchorPoint( ccp(0.0f, 0.1f) );
-	opt1Label->setColor(ccBLACK);
-	opt1Button->addChild(opt1Label);
-
-	// Create second button if requested.
-	CCMenuItemSprite *opt2Button = NULL;
-	if (opt2)
-	{
-		// Replaces Objective-C block in original code.
-		cncb = JACCloseAndCallBlock::closeAndCallBlockWithOptions(
-			coverLayer,
-			opt2SelectorTarget,
-			opt2Selector);
-		CC_ASSERT(cncb);
-
-		opt2Button = CCMenuItemSprite::itemFromNormalSprite(
-			CCSprite::spriteWithFile(kButtonImg),
-			CCSprite::spriteWithFile(kButtonImg),
-			cncb,
-			SEL_MenuHandler(&JACCloseAndCallBlock::Execute) );
-		CC_ASSERT(opt2Button);
-		pos.x = dialog->getTextureRect().size.width * 0.73f;
-		pos.y = opt1Button->getContentSize().height * 0.8f;
-		opt2Button->setPosition(pos);
-
-		CCLabelTTF *opt2Label = CCLabelTTF::labelWithString(
-			opt2,
-			opt2Button->getContentSize(),
-			CCTextAlignmentCenter,
-			kFontName,
-			fontSize);
-		CC_ASSERT(opt2Label);
-		opt2Label->setAnchorPoint( ccp(0.0f, 0.1f) );
-		opt2Label->setColor(ccBLACK);
-		opt2Button->addChild(opt2Label);
-	}
-
-	CCMenu *menu = CCMenu::menuWithItems(
-		opt1Button,
-		opt2Button,
-		NULL);
-	CC_ASSERT(menu);
-	menu->setPosition(CCPointZero);
-
-	dialog->addChild(menu);
-	coverLayer->addChild(dialog);
-
-	// Open the dialog with a nice popup-effect
-	dialog->setScale(0.0f);
-	dialog->runAction(
-		CCEaseBackOut::actionWithAction(
-			CCScaleTo::actionWithDuration(
-				kAnimationTime,
-				1.0f)
-		) );	
-}
-
-*/
 // Text + 2 buttons + customizable containers
 void JACModalAlert::PopupOnLayer(
                          cocos2d::CCLayer *layer,
@@ -548,7 +383,7 @@ void JACModalAlert::PopupOnLayer(
 	//Resize the container for the text
 	if(textContainer != NULL){
 		maxWidth+=2*kMarging;
-		maxHeight*=2*kMarging;
+		maxHeight+=2*kMarging;
 		textContainer->setContentSize(CCSizeMake(maxWidth,maxHeight));
 		textContainer->addChild(labelText);
 
@@ -561,7 +396,18 @@ void JACModalAlert::PopupOnLayer(
 	//Create the first button
 	CCLabelBMFont *button1Label = CCLabelBMFont ::labelWithString(buttonRightText ,kFont);
 	CCControlButton* button1 = CCControlButton::buttonWithLabelAndBackgroundSprite(button1Label,buttonRight);
+    CC_ASSERT(button1);
 
+    //Set the action for the first button
+    // The following is to replace the Objective-C block
+	// in the original.
+	JACCloseAndCallBlock *cncb = JACCloseAndCallBlock::closeAndCallBlockWithOptions(
+                                                                                    coverLayer,
+                                                                                    buttonRigthSelectorTarget,
+                                                                                    buttonRigthSelector);
+	CC_ASSERT(cncb);
+    button1->addTargetWithActionForControlEvents(cncb, SEL_MenuHandler(&JACCloseAndCallBlock::Execute), CCControlEventTouchDown);
+    
 	if(buttonRightSelected != NULL){
 		button1->setBackgroundSpriteForState(buttonRightSelected, CCControlStateHighlighted);
 	}
@@ -579,6 +425,15 @@ void JACModalAlert::PopupOnLayer(
 	if(buttonLeft!=NULL){
 		CCLabelBMFont *button2Label = CCLabelBMFont ::labelWithString(buttonLeftText ,kFont);
 		button2 = CCControlButton::buttonWithLabelAndBackgroundSprite(button2Label,buttonLeft);
+        CC_ASSERT(button2);
+
+        // Replaces Objective-C block in original code.
+		cncb = JACCloseAndCallBlock::closeAndCallBlockWithOptions(
+                                                                  coverLayer,
+                                                                  buttonLeftSelectorTarget,
+                                                                  buttonLeftSelector);
+		CC_ASSERT(cncb);
+        button2->addTargetWithActionForControlEvents(cncb, SEL_MenuHandler(&JACCloseAndCallBlock::Execute), CCControlEventTouchDown);
 
 		if(buttonLeftSelected != NULL){
 			button2->setBackgroundSpriteForState(buttonLeftSelected, CCControlStateHighlighted);
@@ -603,36 +458,37 @@ void JACModalAlert::PopupOnLayer(
 	popup->setContentSize(CCSizeMake(maxWidth,maxHeight));
 
 	//add components to popup
+    CCSize const & sz = coverLayer->getContentSize();
+	CCPoint pos(sz.width, sz.height);
 
 	//add the text
 	if(textContainer != NULL){
 		popup->addChild(textContainer);
-		//TODO: Position of the label
+        textContainer->setPosition(ccp(maxWidth*0.5f, maxHeight - kMarging - (textContainer->getContentSize().height/2)));
 	}else{
 		popup->addChild(labelText);
-		//TODO: Position of the label
+        labelText->setPosition(ccp(maxWidth*0.5f, maxHeight - kMarging - (labelText->getContentSize().height/2)));
 	}
 
 	//add buttons
 	if(button2!=NULL){
 		//Two buttons
-		//TODO:Position of the buttons
 		popup->addChild(button1);
 		popup->addChild(button2);
+        button1->setPosition(ccp(maxWidth*0.5f -kMarging/2 -(button1->getContentSize().width/2) , kMarging + (button1->getContentSize().height/2)));
+        button2->setPosition(ccp(maxWidth*0.5f +kMarging/2 +(button2->getContentSize().width/2) , kMarging + (button2->getContentSize().height/2)));
 	}else{
 		//One Button
-		//TODO:Position of the buttons
 		popup->addChild(button1);
+        button1->setPosition(ccp(maxWidth*0.5f, kMarging + (button1->getContentSize().height/2)));
 	}
 
 
 	//Add the popup to the cover layer
-	CCSize const & sz = coverLayer->getContentSize();
-	CCPoint pos(sz.width, sz.height);
-
 	popup->setTag(kDialogTag);
-	popup->setPosition( ccpMult(pos, 0.5f) );
-	popup->setOpacity(220); // Make it a bit transparent for a cooler look.
+    popup->setPosition( ccpMult(pos, 0.5f) );
+    //TODO: setOpacity doesn't work on children
+//	popup->setOpacity(220); // Make it a bit transparent for a cooler look.
 
 	coverLayer->addChild(popup);
 

@@ -57,15 +57,15 @@ void JACModalAlertTest::menuCallback()
 {
 	switch(currentTest){
 		case TEST_ASK:
-			//JACModalAlert::AskQuestionOnLayer("bla,bla,bla,question",this,this,callfunc_selector(JACModalAlertTest::menuCallback),this,callfunc_selector(JACModalAlertTest::menuCallback));
-			//currentTest++;
-		//break;
+			JACModalAlert::PopupOnLayer(this,"Hello, I'm Jandujar", "ok",this,callfunc_selector(JACModalAlertTest::menuCallback));
+			currentTest++;
+		break;
 		case TEST_CONFIRM:
-			//JACModalAlert::ConfirmQuestionOnLayer("bla,bla,bla,confirm",this,this,callfunc_selector(JACModalAlertTest::menuCallback),this,callfunc_selector(JACModalAlertTest::menuCallback));
-			//currentTest++;
-		//break;
+            JACModalAlert::PopupOnLayer(this,"From\nJanduSoft", "ok","well",this,callfunc_selector(JACModalAlertTest::menuCallback),this,callfunc_selector(JACModalAlertTest::menuCallback));
+			currentTest++;
+		break;
 		case TEST_TELL:
-			JACModalAlert::PopupOnLayer(this,"Hello", "ok",this,callfunc_selector(JACModalAlertTest::menuCallback));
+			JACModalAlert::PopupOnLayer(this,"Hello", "ok","no",this,callfunc_selector(JACModalAlertTest::menuCallback),this,callfunc_selector(JACModalAlertTest::menuCallback));
 			currentTest++;
 		break;
 		default:
