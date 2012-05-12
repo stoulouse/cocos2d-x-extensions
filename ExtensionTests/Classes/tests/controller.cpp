@@ -32,7 +32,9 @@ static TestScene* CreateTestScene(int nIdx)
 	case TEST_JACMODALALERT:
 		pScene = new JACModalAlertTestScene(); break;
 	case TEST_TABVIEW:
-		pScene = new CCTabViewTestScene(); break;
+		pScene = new CCTabViewTestScene(); break;  
+    case TEST_SLIDING_MENU:
+        pScene = new SlidingMenuTestScene(); break; 
     default:
         break;
     }

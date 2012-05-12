@@ -10,6 +10,7 @@
 #include "PSModalAlertTest/PSModalAlertTest.h"
 #include "JACModalAlertTest/JACModalAlertTest.h"
 #include "CCTabView/CCTabViewTest.h"
+#include "SlidingMenuTest/SlidingMenuTest.h"
 
 enum
 {
@@ -22,6 +23,7 @@ enum
 	TEST_PSMODALALERT,
 	TEST_JACMODALALERT,
 	TEST_TABVIEW,
+    TEST_SLIDING_MENU,
 
     TESTS_COUNT,
 };
@@ -36,6 +38,7 @@ const std::string g_aTestNames[TESTS_COUNT] = {
 	"PSModalAlert",
 	"JACModalAlert",
 	"CCTabViewTest",
+    "SlidingMenu",
 };
 
 #endif
