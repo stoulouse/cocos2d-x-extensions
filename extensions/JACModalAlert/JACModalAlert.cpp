@@ -475,8 +475,8 @@ void JACModalAlert::PopupOnLayer(
 		//Two buttons
 		popup->addChild(button1);
 		popup->addChild(button2);
-        button1->setPosition(ccp(maxWidth*0.5f -kMarging/2 -(button1->getContentSize().width/2) , kMarging + (button1->getContentSize().height/2)));
-        button2->setPosition(ccp(maxWidth*0.5f +kMarging/2 +(button2->getContentSize().width/2) , kMarging + (button2->getContentSize().height/2)));
+        button1->setPosition(ccp((button1->getContentSize().width/2) + kMarging, kMarging + (button1->getContentSize().height/2)));
+        button2->setPosition(ccp(maxWidth -(button2->getContentSize().width/2) - kMarging , kMarging + (button2->getContentSize().height/2)));
 	}else{
 		//One Button
 		popup->addChild(button1);
@@ -518,9 +518,7 @@ void JACModalAlert::PopupOnLayer(
     CC_ASSERT(text);
     CC_ASSERT(buttonText);
     CC_ASSERT(popup);
-    CC_ASSERT(textContainer);
     CC_ASSERT(button);
-    CC_ASSERT(buttonSelected);
     CC_ASSERT(buttonSelectorTarget);
     CC_ASSERT(buttonSelector);
     

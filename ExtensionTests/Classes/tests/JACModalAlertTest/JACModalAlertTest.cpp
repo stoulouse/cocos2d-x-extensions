@@ -8,6 +8,9 @@
 
 #include "JACModalAlertTest.h"
 
+#define kPopuImg "popupButton.png"
+#define kPopupButtonImg "popupBackground.png"
+
 using namespace cocos2d;
 
 enum
@@ -64,10 +67,14 @@ void JACModalAlertTest::menuCallback()
             JACModalAlert::PopupOnLayer(this,"From\nJanduSoft", "ok","well",this,callfunc_selector(JACModalAlertTest::menuCallback),this,callfunc_selector(JACModalAlertTest::menuCallback));
 			currentTest++;
 		break;
-		case TEST_TELL:
-			JACModalAlert::PopupOnLayer(this,"Hello", "ok","no",this,callfunc_selector(JACModalAlertTest::menuCallback),this,callfunc_selector(JACModalAlertTest::menuCallback));
+		case TEST_TELL:{
+            CCScale9Sprite *popup = CCScale9Sprite::spriteWithFile(kPopuImg);
+            CCScale9Sprite *button = CCScale9Sprite::spriteWithFile(kPopupButtonImg);
+
+			JACModalAlert::PopupOnLayer(this,"Bye", "bye",popup,NULL,button,NULL,this,callfunc_selector(JACModalAlertTest::menuCallback));
 			currentTest++;
 		break;
+        }
 		default:
 			CCLog("Done");
 			break;
