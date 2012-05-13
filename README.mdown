@@ -1,8 +1,46 @@
 Cocos2d-x Extensions
+=================
+This repo is a collection of quality 3rd party extensions and additions for the Cocos2D-X Engine.  
+Everything that doesn’t modify Cocos2D-X itself, while bringing new functionality can become a part of Cocos2D-X-Extensions Repo: alternative versions of existing classes, additional categories, new nodes, actions, etc…  
+  
+As well as Cocos2D-X, Cocos2D Extensions are licensed under the MIT License.
 
-Here's the repo for cocos2d-x extensions in c++. Let's rock :)
+Cocos2D-X Extensions subforum: http://www.cocos2d-iphone.org/forum/forum/17  
 
+How to get the source
+===================== 
 
-How to build
+```
+    git clone git@github.com:jandujar/cocos2d-x-extensions.git
+    cd cocos2d-x-extensions
+  
+	# init cocos2d-x submodules in order to build & run the tests.
+    git submodule update --init
+	
+```
 
-Copy or clone cocos2d-x-extensions folder into your cocos2d-x root. Open cocos2d-x/cocos2d-x-extensions/ExtensionTests/proj.ios/ExtensionTests.xcodeproj, build and run.
+Files & Folders
+=================
+* **cocos2d-x** - cocos2d-x 1.x submodule.
+* **Extensions** - folders with extensions sources, that can be inlcuded in your project.
+* **ExtensionTests** - sources & resources of Extensions demos.
+
+Extensions
+=================
+ * **NdCxList** - Does not work property.
+ * **AdvanceSprite** - Works.
+ * **AdvenceParticle** - Works.
+ * **CCMenuItemDynamic** - Dynamic Menu Item Button. Works.
+ * **DecoratedBox** - Dynamic Sprite. Works.
+ * **CCButton** - Bug on win32 version. 
+ * **PSModalAlert** - Pop-up with fixed images and fixed size.
+ * **JACModalAlert** - Pop-up with dynamic size.
+ * **CCTabView** - Tabs. Works.
+ * **SlidingMenu** - Works.
+ * **TableView** - Test does not work.
+
+Contributing
+================
+Looking for bugs or TODO's? Check the [issues](https://github.com/jandujar/cocos2d-x-extensions/issues "Issues") page.  
+Want to share your own extension for cocos2d? Read this: [Adding-new-Extension](https://github.com/jandujar/cocos2d-x-extensions/wiki/Adding-new-Extension)  
+Know something that should be inlcuded in cocos2d-x-extensions-repo? Got problems and/or found a bug? [Create an Issue](https://github.com/jandujar/cocos2d-x-extensions/issues/new "New Issue")
