@@ -1,5 +1,13 @@
 /*
- * ModalAlert - Customizable popup dialogs/alerts for Cocos2D
+ * ModalAlert - Customizable popup dialogs/alerts for Cocos2D-X with a dynamic size
+ * 
+ *
+ * Customization of ModalAlert by Rombos && ParallaxShift by
+ *
+ * Jose Antonio Andujar Clavell, JanduSoft
+ * http://www.jandusoft.com 
+ * http://www.jandujar.com
+ *
  * For details, visit the Rombos blog:
  * http://rombosblog.wordpress.com/2012/02/28/modal-alerts-for-cocos2d/
  *

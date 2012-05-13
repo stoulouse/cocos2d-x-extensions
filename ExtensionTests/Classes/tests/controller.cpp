@@ -35,6 +35,8 @@ static TestScene* CreateTestScene(int nIdx)
 		pScene = new CCTabViewTestScene(); break;  
     case TEST_SLIDING_MENU:
         pScene = new SlidingMenuTestScene(); break; 
+    case TEST_TABLE_VIEW:
+        pScene = new CCTableViewTestScene(); break;
     default:
         break;
     }

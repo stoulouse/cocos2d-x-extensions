@@ -26,27 +26,40 @@
  * THE SOFTWARE.
  *
  */
-//
-#ifndef _SLIDINGMENU_TEST_H
-#define _SLIDINGMENU_TEST_H
 
-#include "SlidingMenu/SlidingMenu.h"
+#ifndef _CCTABLEVIEW_TEST_H
+#define _CCTABLEVIEW_TEST_H
+
+#include "CCTableView.h"
 #include "../testBasic.h"
 
-class SlidingMenuTest : public cocos2d::CCLayer
+class CCTableViewTest : public cocos2d::CCLayer,public CCTableViewDelegate,public CCTableViewDataSource
 {
 protected:
-    SlidingMenuGrid *m_pSlidingMenu;
-    
+    CCTableView* m_pTableView;
+    unsigned int rowCount;
 public:
-    SlidingMenuTest();
-    ~SlidingMenuTest();
+    CCTableViewTest();
+    ~CCTableViewTest();
     
     virtual void onEnter(void);
 	virtual std::string title();
+    
+    //CCTable Functions
+    void ccTableViewWillDisplayCellForRowAtIndexPath(CCIndexPath &mIndexPath,CCTableViewCell * mTableViewCell,CCTableView * mTableView);
+	float cellHeightForRowAtIndexPath(CCIndexPath & mIndexPath,CCTableView * mTableView);
+	void didSelectRowAtIndexPath(CCIndexPath & mIndexPath,CCTableView * mTableView);
+    
+    unsigned int numberOfRowsInSection(unsigned int mSection,CCTableView * mTableView);
+	unsigned int numberOfSectionsInCCTableView(CCTableView * mTableView);
+	/*cell was set to anchor point(0.5,0.5)*/
+	CCTableViewCell * cellForRowAtIndexPath(CCIndexPath &mIndexPath,CCTableView * mTableView);
+	virtual void ccTableViewCommitCellEditingStyleForRowAtIndexPath(CCTableView * mTableView,CCTableViewCellEditingStyle mCellEditStyle,CCIndexPath &mIndexPath);
+	virtual void ccTableViewWillReloadCellForRowAtIndexPath(CCIndexPath &mIndexPath,CCTableViewCell * mTableViewCell,CCTableView * mTableView);
+	
 };
 
-class SlidingMenuTestScene : public TestScene
+class CCTableViewTestScene : public TestScene
 {
 public:
     virtual void runThisTest();

@@ -11,6 +11,7 @@
 #include "JACModalAlertTest/JACModalAlertTest.h"
 #include "CCTabView/CCTabViewTest.h"
 #include "SlidingMenuTest/SlidingMenuTest.h"
+#include "CCTableView/TableViewTest.h"
 
 enum
 {
@@ -24,6 +25,7 @@ enum
 	TEST_JACMODALALERT,
 	TEST_TABVIEW,
     TEST_SLIDING_MENU,
+    TEST_TABLE_VIEW,
 
     TESTS_COUNT,
 };
@@ -39,6 +41,7 @@ const std::string g_aTestNames[TESTS_COUNT] = {
 	"JACModalAlert",
 	"CCTabViewTest",
     "SlidingMenu",
+    "TableView",
 };
 
 #endif
