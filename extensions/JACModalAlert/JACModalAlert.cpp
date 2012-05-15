@@ -46,9 +46,6 @@ USING_NS_CC;
 #define kDialogTag 0xdaa999
 #define kCoverLayerTag 0xceaea999
 #define kAnimationTime 0.4f
-#define kDialogImg "dialogBox.png"
-#define kButtonImg "dialogButton.png"
-#define kFontName "MarkerFelt-Thin"
 #define kPopuImg "popupBackground.png"
 #define kPopupButtonImg "popupButton.png"
 #define kPopupContainerImg "popupContainer.png"
