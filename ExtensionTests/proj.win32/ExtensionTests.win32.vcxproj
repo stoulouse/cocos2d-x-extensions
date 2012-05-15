@@ -44,9 +44,9 @@
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration).win32\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration).win32\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">J:\JS\cocos2d-x\cocos2dx\include;J:\JS\cocos2d-x\CocosDenshion\include;J:\JS\cocos2d-x\cocos2dx\platform;J:\JS\cocos2d-x\cocos2dx\platform\third_party\win32\OGLES;J:\JS\cocos2d-x\cocos2dx\platform\third_party\win32\curl;J:\JS\cocos2d-x\cocos2dx;$(IncludePath)</IncludePath>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">J:\JS\cocos2d-x\Release.win32;$(LibraryPath)</LibraryPath>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">J:\JS\cocos2d-x\cocos2dx\include;J:\JS\cocos2d-x\CocosDenshion\include;J:\JS\cocos2d-x\cocos2dx\platform;J:\JS\cocos2d-x\cocos2dx\platform\third_party\win32\OGLES;J:\JS\cocos2d-x\cocos2dx\platform\third_party\win32\curl;J:\JS\cocos2d-x\cocos2dx;$(IncludePath)</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">J:\JS\cocos2d-x\cocos2dx\include;J:\JS\cocos2d-x\CocosDenshion\include;J:\JS\cocos2d-x\cocos2dx\platform;J:\JS\cocos2d-x\cocos2dx\platform\third_party\win32\OGLES;J:\JS\cocos2d-x\cocos2dx\platform\third_party\win32\curl;J:\JS\cocos2d-x\cocos2dx;J:\JS\cocos2d-x\cocos2dx\platform\third_party\win32\pthread;$(IncludePath)</IncludePath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">J:\JS\cocos2d-x\Release.win32;J:\JS\cocos2d-x\cocos2dx\platform\third_party\win32\libraries;$(LibraryPath)</LibraryPath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">J:\JS\cocos2d-x\cocos2dx\include;J:\JS\cocos2d-x\CocosDenshion\include;J:\JS\cocos2d-x\cocos2dx\platform;J:\JS\cocos2d-x\cocos2dx\platform\third_party\win32\OGLES;J:\JS\cocos2d-x\cocos2dx\platform\third_party\win32\curl;J:\JS\cocos2d-x\cocos2dx;J:\JS\cocos2d-x\cocos2dx\platform\third_party\win32\pthread;$(IncludePath)</IncludePath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">J:\JS\cocos2d-x\Release.win32;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -65,7 +65,7 @@
       <ExceptionHandling>Sync</ExceptionHandling>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libcocos2d.lib;libgles_cm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>pthreadVCE2.lib;libcurl_imp.lib;libcocos2d.lib;libgles_cm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -121,17 +121,28 @@
     <ClCompile Include="..\..\extensions\CCControlExtension\CCSpacer.cpp" />
     <ClCompile Include="..\..\extensions\CCControlExtension\Utils\CCControlUtils.cpp" />
     <ClCompile Include="..\..\extensions\CCMenuItemDynamic\CCMenuItemDynamic.cpp" />
+    <ClCompile Include="..\..\extensions\CCNetwork\CCNetwork.cpp" />
+    <ClCompile Include="..\..\extensions\CCNetwork\cJSON.c" />
     <ClCompile Include="..\..\extensions\CCScale9Sprite\CCScale9Sprite.cpp" />
+    <ClCompile Include="..\..\extensions\CCScrollLayerExt\CCScrollLayer.cpp" />
+    <ClCompile Include="..\..\extensions\CCScrollLayerExt\CCScrollLayerExt.cpp" />
+    <ClCompile Include="..\..\extensions\CCTableView\CCTableView.cpp" />
+    <ClCompile Include="..\..\extensions\CCTableView\CCTableViewCell.cpp" />
     <ClCompile Include="..\..\extensions\CCTabView\CCTabView.cpp" />
     <ClCompile Include="..\..\extensions\DecoratedBox\DecoratedBox.cpp" />
     <ClCompile Include="..\..\extensions\JACModalAlert\JACModalAlert.cpp" />
     <ClCompile Include="..\..\extensions\PSModalAlert\PSModalAlert.cpp" />
+    <ClCompile Include="..\..\extensions\SlidingMenu\SlidingMenu.cpp" />
     <ClCompile Include="..\Classes\tests\CCButton\CCButtonTest.cpp" />
     <ClCompile Include="..\Classes\tests\CCMenuItemDynamic\CCMenuItemDynamicTest.cpp" />
+    <ClCompile Include="..\Classes\tests\CCNetworkTest\CCNetworkTest.cpp" />
+    <ClCompile Include="..\Classes\tests\CCTableView\CustomCCTableViewCell.cpp" />
+    <ClCompile Include="..\Classes\tests\CCTableView\TableViewTest.cpp" />
     <ClCompile Include="..\Classes\tests\CCTabView\CCTabViewTest.cpp" />
     <ClCompile Include="..\Classes\tests\DecoratedBox\DecoratedBoxTest.cpp" />
     <ClCompile Include="..\Classes\tests\JACModalAlertTest\JACModalAlertTest.cpp" />
     <ClCompile Include="..\Classes\tests\PSModalAlertTest\PSModalAlertTest.cpp" />
+    <ClCompile Include="..\Classes\tests\SlidingMenuTest\SlidingMenuTest.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\tests\controller.cpp" />
@@ -159,17 +170,28 @@
     <ClInclude Include="..\..\extensions\CCControlExtension\CCSpacer.h" />
     <ClInclude Include="..\..\extensions\CCControlExtension\Utils\CCControlUtils.h" />
     <ClInclude Include="..\..\extensions\CCMenuItemDynamic\CCMenuItemDynamic.h" />
+    <ClInclude Include="..\..\extensions\CCNetwork\CCNetwork.h" />
+    <ClInclude Include="..\..\extensions\CCNetwork\cJSON.h" />
     <ClInclude Include="..\..\extensions\CCScale9Sprite\CCScale9Sprite.h" />
+    <ClInclude Include="..\..\extensions\CCScrollLayerExt\CCScrollLayer.h" />
+    <ClInclude Include="..\..\extensions\CCScrollLayerExt\CCScrollLayerExt.h" />
+    <ClInclude Include="..\..\extensions\CCTableView\CCTableView.h" />
+    <ClInclude Include="..\..\extensions\CCTableView\CCTableViewCell.h" />
     <ClInclude Include="..\..\extensions\CCTabView\CCTabView.h" />
     <ClInclude Include="..\..\extensions\DecoratedBox\DecoratedBox.h" />
     <ClInclude Include="..\..\extensions\JACModalAlert\JACModalAlert.h" />
     <ClInclude Include="..\..\extensions\PSModalAlert\PSModalAlert.h" />
+    <ClInclude Include="..\..\extensions\SlidingMenu\SlidingMenu.h" />
     <ClInclude Include="..\Classes\tests\CCButton\CCButtonTest.h" />
     <ClInclude Include="..\Classes\tests\CCMenuItemDynamic\CCMenuItemDynamicTest.h" />
+    <ClInclude Include="..\Classes\tests\CCNetworkTest\CCNetworkTest.h" />
+    <ClInclude Include="..\Classes\tests\CCTableView\CustomCCTableViewCell.h" />
+    <ClInclude Include="..\Classes\tests\CCTableView\TableViewTest.h" />
     <ClInclude Include="..\Classes\tests\CCTabView\CCTabViewTest.h" />
     <ClInclude Include="..\Classes\tests\DecoratedBox\DecoratedBoxTest.h" />
     <ClInclude Include="..\Classes\tests\JACModalAlertTest\JACModalAlertTest.h" />
     <ClInclude Include="..\Classes\tests\PSModalAlertTest\PSModalAlertTest.h" />
+    <ClInclude Include="..\Classes\tests\SlidingMenuTest\SlidingMenuTest.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\tests\controller.h" />

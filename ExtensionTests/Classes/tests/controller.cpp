@@ -37,6 +37,8 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new SlidingMenuTestScene(); break; 
     case TEST_TABLE_VIEW:
         pScene = new CCTableViewTestScene(); break;
+	case TEST_CCNETWORK_VIEW:
+		pScene = new CCNetworkTestScene(); break;
     default:
         break;
     }

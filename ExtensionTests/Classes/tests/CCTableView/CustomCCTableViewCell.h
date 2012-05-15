@@ -10,7 +10,7 @@
 #include "cocos2d.h"
 USING_NS_CC;
 
-#include "CCTableViewCell.h"
+#include "CCTableView/CCTableViewCell.h"
 
 class CustomCCTableViewCell : public CCTableViewCell {
 public:

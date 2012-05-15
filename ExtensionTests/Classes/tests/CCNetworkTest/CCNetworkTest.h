@@ -27,39 +27,29 @@
  *
  */
 
-#ifndef _CCTABLEVIEW_TEST_H
-#define _CCTABLEVIEW_TEST_H
+#ifndef _CCNETWORK_TEST_H
+#define _CCNETWORK_TEST_H
 
-#include "CCTableView/CCTableView.h"
+#include "CCNetwork/CCNetwork.h"
 #include "../testBasic.h"
 
-class CCTableViewTest : public cocos2d::CCLayer,public CCTableViewDelegate,public CCTableViewDataSource
-{
+class CCNetworkTest : public cocos2d::CCLayer
+{  
 protected:
-    CCTableView* m_pTableView;
-    unsigned int rowCount;
+	bool isThreadRunning;
+	CCNetwork * network;
 public:
-    CCTableViewTest();
-    ~CCTableViewTest();
+    CCNetworkTest();
+    ~CCNetworkTest();
     
     virtual void onEnter(void);
 	virtual std::string title();
-    
-    //CCTable Functions
-    void ccTableViewWillDisplayCellForRowAtIndexPath(CCIndexPath &mIndexPath,CCTableViewCell * mTableViewCell,CCTableView * mTableView);
-	float cellHeightForRowAtIndexPath(CCIndexPath & mIndexPath,CCTableView * mTableView);
-	void didSelectRowAtIndexPath(CCIndexPath & mIndexPath,CCTableView * mTableView);
-    
-    unsigned int numberOfRowsInSection(unsigned int mSection,CCTableView * mTableView);
-	unsigned int numberOfSectionsInCCTableView(CCTableView * mTableView);
-	/*cell was set to anchor point(0.5,0.5)*/
-	CCTableViewCell * cellForRowAtIndexPath(CCIndexPath &mIndexPath,CCTableView * mTableView);
-	virtual void ccTableViewCommitCellEditingStyleForRowAtIndexPath(CCTableView * mTableView,CCTableViewCellEditingStyle mCellEditStyle,CCIndexPath &mIndexPath);
-	virtual void ccTableViewWillReloadCellForRowAtIndexPath(CCIndexPath &mIndexPath,CCTableViewCell * mTableViewCell,CCTableView * mTableView);
-	
+	virtual void update( cocos2d::ccTime dt );
+	void menuCallback();
+	void dataArrived();
 };
 
-class CCTableViewTestScene : public TestScene
+class CCNetworkTestScene : public TestScene
 {
 public:
     virtual void runThisTest();

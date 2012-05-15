@@ -13,7 +13,7 @@
 #include "cocos2d.h"
 USING_NS_CC;
 
-#include "CCScrollLayerExt.h"
+#include "CCScrollLayerExt/CCScrollLayerExt.h"
 
 enum CCTableViewCellEditingStyle{
     CCTableViewCellEditingStyleNone,

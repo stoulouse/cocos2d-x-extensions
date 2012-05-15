@@ -7,8 +7,8 @@
  *
  */
 
-#include "DecoratedBox.h"
-#include "CCTableView.h"
+#include "DecoratedBox/DecoratedBox.h"
+#include "CCTableView/CCTableView.h"
 #include "CustomCCTableViewCell.h"
 
 CustomCCTableViewCell::CustomCCTableViewCell(const char * mCellIdentifier):CCTableViewCell(mCellIdentifier)
