@@ -38,6 +38,7 @@ Extensions
  * **CCTabView** - Tabs. Works.
  * **SlidingMenu** - Works.
  * **TableView** - Test does not work.
+ * **CCNetwork** - Working, Asyncronous json parser.
 
 Contributing
 ================
