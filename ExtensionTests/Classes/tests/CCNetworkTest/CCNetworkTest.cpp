@@ -38,6 +38,8 @@ void CCNetworkTestScene::runThisTest()
     
     CCDirector::sharedDirector()->replaceScene(this);
     pLayer->release();
+
+	
 }
 
 CCNetworkTest::CCNetworkTest()
@@ -58,13 +60,12 @@ CCNetworkTest::CCNetworkTest()
     // Place the menu item in the center
     pCloseItem->setPosition(ccp(s.width/2, s.height/2));
 
-	addChild(pCloseItem);
+	CCMenu *menu = CCMenu::menuWithItems(pCloseItem, NULL);	
+	menu->setPosition( CCPointZero );
 
-}
+	addChild(menu);
 
-void CCNetworkTest::onEnter()
-{
-	CCLayer::onEnter();
+	isThreadRunning = false;
 }
 
 std::string CCNetworkTest::title()
@@ -72,15 +73,16 @@ std::string CCNetworkTest::title()
     return "CCNetwork Test";
 }
 
-CCNetworkTest::~CCNetworkTest()
+void CCNetworkTest::onEnter()
 {
+	CCLayer::onEnter();
 }
 
-void CCNetworkTest::menuCallback()
+
+void CCNetworkTest::menuCallback(CCObject* pSender)
 {
 	if(!isThreadRunning){
-		//std::string url(http://www.google.com/calendar/feeds/developer-calendar@google.com/public/full?alt=json);
-		std::string url("http://10.16.77.24/json/pinfo.json");
+		std::string url(http://www.google.com/calendar/feeds/developer-calendar@google.com/public/full?alt=json);
 		isThreadRunning = true;
 		scheduleUpdate();
 		network = CCNetwork::loadJSON( url.c_str(), this, callfunc_selector( CCNetworkTest::dataArrived ) );
@@ -96,7 +98,9 @@ void CCNetworkTest::update( ccTime dt )
         {
             cJSON *result = network->getResultJSON();
 
-            // process with result here
+			char *text = cJSON_Print(result);
+			CCLog("JSON Readed \n%s",text);
+			free(text);
 
 			network->release();
         }

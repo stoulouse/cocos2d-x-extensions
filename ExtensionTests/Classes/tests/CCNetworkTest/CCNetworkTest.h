@@ -38,15 +38,14 @@ class CCNetworkTest : public cocos2d::CCLayer
 protected:
 	bool isThreadRunning;
 	CCNetwork * network;
-public:
-    CCNetworkTest();
-    ~CCNetworkTest();
-    
-    virtual void onEnter(void);
+public: 
+    CCNetworkTest();  
+
 	virtual std::string title();
 	virtual void update( cocos2d::ccTime dt );
-	void menuCallback();
+	void menuCallback(CCObject* pSender);
 	void dataArrived();
+	void onEnter();
 };
 
 class CCNetworkTestScene : public TestScene
