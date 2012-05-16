@@ -31,6 +31,8 @@
  *
  */
 
+#ifndef __CCNETWORK_H__
+#define __CCNETWORK_H__
 
 #include "cocos2d.h" 
 #include "stdio.h" 
@@ -60,3 +62,5 @@ class CCNetwork : public cocos2d::CCObject {
 
 		static CCNetwork *loadJSON( const char *url, cocos2d::CCObject *target, cocos2d::SEL_CallFunc callback );
 };
+
+#endif
