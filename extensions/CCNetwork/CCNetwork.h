@@ -35,8 +35,8 @@
 #include "cocos2d.h" 
 #include "stdio.h" 
 #include "stdlib.h" 
-#include "curl.h" 
-#include "pthread.h" 
+#include "curl/curl.h" 
+#include "pthread/pthread.h" 
 #include "CCNetwork/cJSON.h" 
 
 
