@@ -67,6 +67,7 @@ CCMosquittoClientTest::CCMosquittoClientTest()
 
 	isWorking = false;
 	mosquitto = CCMosquittoClient::initWithClientId("ID_CLIENT", this);
+	addChild(mosquitto); //for scheduling
 }
 
 std::string CCMosquittoClientTest::title()
