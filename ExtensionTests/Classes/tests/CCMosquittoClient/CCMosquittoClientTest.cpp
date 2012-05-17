@@ -72,7 +72,7 @@ CCMosquittoClientTest::CCMosquittoClientTest()
 
 std::string CCMosquittoClientTest::title()
 {
-    return "CCNetwork Test";
+    return "CCMosquittoClient Test";
 }
 
 void CCMosquittoClientTest::onEnter()
@@ -91,10 +91,9 @@ void CCMosquittoClientTest::menuCallback(CCObject* pSender)
 		mosquitto->subscribe(topic);
 		isWorking = true;
 	}else{
-		mosquitto->loop(0);
-		//mosquitto->unsubscribe(topic);
-		//mosquitto->disconnect();
-		//isWorking = false;
+		mosquitto->unsubscribe(topic);
+		mosquitto->disconnect();
+		isWorking = false;
 	}
 	
 }
