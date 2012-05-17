@@ -27,13 +27,13 @@
  *
  */
 
-#include "CCNetworkTest.h"
+#include "CCMosquittoClientTest.h"
 
 using namespace cocos2d;
 
-void CCNetworkTestScene::runThisTest()
+void CCMosquittoClientTestScene::runThisTest()
 {
-    CCLayer* pLayer = new CCNetworkTest();
+    CCLayer* pLayer = new CCMosquittoClientTest();
     addChild(pLayer);
     
     CCDirector::sharedDirector()->replaceScene(this);
@@ -42,7 +42,7 @@ void CCNetworkTestScene::runThisTest()
 	
 }
 
-CCNetworkTest::CCNetworkTest()
+CCMosquittoClientTest::CCMosquittoClientTest()
 {
     CCSize s = CCDirector::sharedDirector()->getWinSize();
     
@@ -55,7 +55,7 @@ CCNetworkTest::CCNetworkTest()
         "CloseNormal.png",
         "CloseSelected.png",
         this,
-        menu_selector(CCNetworkTest::menuCallback));
+        menu_selector(CCMosquittoClientTest::menuCallback));
 
     // Place the menu item in the center
     pCloseItem->setPosition(ccp(s.width/2, s.height/2));
@@ -65,48 +65,58 @@ CCNetworkTest::CCNetworkTest()
 
 	addChild(menu);
 
-	isThreadRunning = false;
+	isWorking = false;
+	mosquitto = CCMosquittoClient::initWithClientId("ID_CLIENT", this);
 }
 
-std::string CCNetworkTest::title()
+std::string CCMosquittoClientTest::title()
 {
     return "CCNetwork Test";
 }
 
-void CCNetworkTest::onEnter()
+void CCMosquittoClientTest::onEnter()
 {
 	CCLayer::onEnter();
 }
 
 
-void CCNetworkTest::menuCallback(CCObject* pSender)
+void CCMosquittoClientTest::menuCallback(CCObject* pSender)
 {
-	if(!isThreadRunning){
-		std::string url("http://www.google.com/calendar/feeds/developer-calendar@google.com/public/full?alt=json");
-		isThreadRunning = true;
-		scheduleUpdate();
-		network = CCNetwork::loadJSON( url.c_str(), this, callfunc_selector( CCNetworkTest::dataArrived ) );
-		network->retain();
+	std::string topic("yourtopic");
+	std::string host("yourserver");	
+
+	if(!isWorking){
+		mosquitto->connectToHost(host);
+		mosquitto->subscribe(topic);
+		isWorking = true;
+	}else{
+		mosquitto->loop(0);
+		//mosquitto->unsubscribe(topic);
+		//mosquitto->disconnect();
+		//isWorking = false;
 	}
+	
 }
 
-void CCNetworkTest::update( ccTime dt )
-{
-    if( !isThreadRunning )
-    {
-        if( network != NULL )
-        {
-            cJSON *result = network->getResultJSON();
-
-			char *text = cJSON_Print(result);
-			CCLog("JSON Readed \n%s",text);
-			free(text);
-
-			network->release();
-        }
-
-        unscheduleUpdate();
-    }
+void CCMosquittoClientTest::didConnect(int code){
+	CCLog("Connected");
 }
 
-void CCNetworkTest::dataArrived() { isThreadRunning = false; }
+void CCMosquittoClientTest::didDisconnect(){
+	CCLog("Disconnected");
+}
+
+void CCMosquittoClientTest::didPublish(int messageId){
+	CCLog("Published");
+}
+
+void CCMosquittoClientTest::didReceiveMessage(std::string message, std::string topic){
+	CCLog("Received message %s from topic %s",message.c_str(), topic.c_str());
+}
+void CCMosquittoClientTest::didSubscribe(int messageID, cocos2d::CCArray* grantedQos){
+	CCLog("Subscribed with id %d", messageID);
+}
+
+void CCMosquittoClientTest::didUnsubscribe(int messageID){
+	CCLog("Unsubscribe with id %id", messageID);
+}

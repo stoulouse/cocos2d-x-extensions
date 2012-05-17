@@ -44,9 +44,9 @@
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration).win32\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration).win32\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">J:\JS\cocos2d-x\cocos2dx\include;J:\JS\cocos2d-x\CocosDenshion\include;J:\JS\cocos2d-x\cocos2dx\platform;J:\JS\cocos2d-x\cocos2dx\platform\third_party\win32\OGLES;J:\JS\cocos2d-x\cocos2dx\platform\third_party\win32\curl;J:\JS\cocos2d-x\cocos2dx;J:\JS\cocos2d-x\cocos2dx\platform\third_party\win32\pthread;$(IncludePath)</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">J:\JS\cocos2d-x\cocos2dx\include;J:\JS\cocos2d-x\CocosDenshion\include;J:\JS\cocos2d-x\cocos2dx\platform;J:\JS\cocos2d-x\cocos2dx\platform\third_party\win32\OGLES;J:\JS\cocos2d-x\cocos2dx\platform\third_party\win32\;J:\JS\cocos2d-x\cocos2dx;J:\JS\cocos2d-x\cocos2dx\platform\third_party\win32\pthread;J:\JS\cocos2d-x\extensions\extensions\CCMosquittoClient\libmosquito;$(IncludePath)</IncludePath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">J:\JS\cocos2d-x\Release.win32;J:\JS\cocos2d-x\cocos2dx\platform\third_party\win32\libraries;$(LibraryPath)</LibraryPath>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">J:\JS\cocos2d-x\cocos2dx\include;J:\JS\cocos2d-x\CocosDenshion\include;J:\JS\cocos2d-x\cocos2dx\platform;J:\JS\cocos2d-x\cocos2dx\platform\third_party\win32\OGLES;J:\JS\cocos2d-x\cocos2dx\platform\third_party\win32\curl;J:\JS\cocos2d-x\cocos2dx;J:\JS\cocos2d-x\cocos2dx\platform\third_party\win32\pthread;$(IncludePath)</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">J:\JS\cocos2d-x\cocos2dx\include;J:\JS\cocos2d-x\CocosDenshion\include;J:\JS\cocos2d-x\cocos2dx\platform;J:\JS\cocos2d-x\cocos2dx\platform\third_party\win32\OGLES;J:\JS\cocos2d-x\cocos2dx\platform\third_party\win32\;J:\JS\cocos2d-x\cocos2dx;J:\JS\cocos2d-x\cocos2dx\platform\third_party\win32\pthread;J:\JS\cocos2d-x\extensions\extensions\CCMosquittoClient\libmosquito;$(IncludePath)</IncludePath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">J:\JS\cocos2d-x\Release.win32;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -65,7 +65,7 @@
       <ExceptionHandling>Sync</ExceptionHandling>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>pthreadVCE2.lib;libcurl_imp.lib;libcocos2d.lib;libgles_cm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>WS2_32.lib;pthreadVCE2.lib;libcurl_imp.lib;libcocos2d.lib;libgles_cm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -93,7 +93,7 @@
       <ExceptionHandling>Sync</ExceptionHandling>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libcocos2d.lib;libgles_cm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>WS2_32.lib;pthreadVCE2.lib;libcurl_imp.lib;libcocos2d.lib;libgles_cm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -121,6 +121,19 @@
     <ClCompile Include="..\..\extensions\CCControlExtension\CCSpacer.cpp" />
     <ClCompile Include="..\..\extensions\CCControlExtension\Utils\CCControlUtils.cpp" />
     <ClCompile Include="..\..\extensions\CCMenuItemDynamic\CCMenuItemDynamic.cpp" />
+    <ClCompile Include="..\..\extensions\CCMosquittoClient\CCMosquittoClient.cpp" />
+    <ClCompile Include="..\..\extensions\CCMosquittoClient\libmosquito\logging_mosq.c" />
+    <ClCompile Include="..\..\extensions\CCMosquittoClient\libmosquito\memory_mosq.c" />
+    <ClCompile Include="..\..\extensions\CCMosquittoClient\libmosquito\messages_mosq.c" />
+    <ClCompile Include="..\..\extensions\CCMosquittoClient\libmosquito\mosquitto.c" />
+    <ClCompile Include="..\..\extensions\CCMosquittoClient\libmosquito\net_mosq.c" />
+    <ClCompile Include="..\..\extensions\CCMosquittoClient\libmosquito\read_handle.c" />
+    <ClCompile Include="..\..\extensions\CCMosquittoClient\libmosquito\read_handle_client.c" />
+    <ClCompile Include="..\..\extensions\CCMosquittoClient\libmosquito\read_handle_shared.c" />
+    <ClCompile Include="..\..\extensions\CCMosquittoClient\libmosquito\send_client_mosq.c" />
+    <ClCompile Include="..\..\extensions\CCMosquittoClient\libmosquito\send_mosq.c" />
+    <ClCompile Include="..\..\extensions\CCMosquittoClient\libmosquito\util_mosq.c" />
+    <ClCompile Include="..\..\extensions\CCMosquittoClient\libmosquito\will_mosq.c" />
     <ClCompile Include="..\..\extensions\CCNetwork\CCNetwork.cpp" />
     <ClCompile Include="..\..\extensions\CCNetwork\cJSON.c" />
     <ClCompile Include="..\..\extensions\CCScale9Sprite\CCScale9Sprite.cpp" />
@@ -135,6 +148,7 @@
     <ClCompile Include="..\..\extensions\SlidingMenu\SlidingMenu.cpp" />
     <ClCompile Include="..\Classes\tests\CCButton\CCButtonTest.cpp" />
     <ClCompile Include="..\Classes\tests\CCMenuItemDynamic\CCMenuItemDynamicTest.cpp" />
+    <ClCompile Include="..\Classes\tests\CCMosquittoClient\CCMosquittoClientTest.cpp" />
     <ClCompile Include="..\Classes\tests\CCNetworkTest\CCNetworkTest.cpp" />
     <ClCompile Include="..\Classes\tests\CCTableView\CustomCCTableViewCell.cpp" />
     <ClCompile Include="..\Classes\tests\CCTableView\TableViewTest.cpp" />
@@ -170,6 +184,19 @@
     <ClInclude Include="..\..\extensions\CCControlExtension\CCSpacer.h" />
     <ClInclude Include="..\..\extensions\CCControlExtension\Utils\CCControlUtils.h" />
     <ClInclude Include="..\..\extensions\CCMenuItemDynamic\CCMenuItemDynamic.h" />
+    <ClInclude Include="..\..\extensions\CCMosquittoClient\CCMosquittoClient.h" />
+    <ClInclude Include="..\..\extensions\CCMosquittoClient\libmosquito\logging_mosq.h" />
+    <ClInclude Include="..\..\extensions\CCMosquittoClient\libmosquito\memory_mosq.h" />
+    <ClInclude Include="..\..\extensions\CCMosquittoClient\libmosquito\messages_mosq.h" />
+    <ClInclude Include="..\..\extensions\CCMosquittoClient\libmosquito\mosquitto.h" />
+    <ClInclude Include="..\..\extensions\CCMosquittoClient\libmosquito\mosquitto_config.h" />
+    <ClInclude Include="..\..\extensions\CCMosquittoClient\libmosquito\mosquitto_internal.h" />
+    <ClInclude Include="..\..\extensions\CCMosquittoClient\libmosquito\mqtt3_protocol.h" />
+    <ClInclude Include="..\..\extensions\CCMosquittoClient\libmosquito\net_mosq.h" />
+    <ClInclude Include="..\..\extensions\CCMosquittoClient\libmosquito\read_handle.h" />
+    <ClInclude Include="..\..\extensions\CCMosquittoClient\libmosquito\send_mosq.h" />
+    <ClInclude Include="..\..\extensions\CCMosquittoClient\libmosquito\util_mosq.h" />
+    <ClInclude Include="..\..\extensions\CCMosquittoClient\libmosquito\will_mosq.h" />
     <ClInclude Include="..\..\extensions\CCNetwork\CCNetwork.h" />
     <ClInclude Include="..\..\extensions\CCNetwork\cJSON.h" />
     <ClInclude Include="..\..\extensions\CCScale9Sprite\CCScale9Sprite.h" />
@@ -184,6 +211,7 @@
     <ClInclude Include="..\..\extensions\SlidingMenu\SlidingMenu.h" />
     <ClInclude Include="..\Classes\tests\CCButton\CCButtonTest.h" />
     <ClInclude Include="..\Classes\tests\CCMenuItemDynamic\CCMenuItemDynamicTest.h" />
+    <ClInclude Include="..\Classes\tests\CCMosquittoClient\CCMosquittoClientTest.h" />
     <ClInclude Include="..\Classes\tests\CCNetworkTest\CCNetworkTest.h" />
     <ClInclude Include="..\Classes\tests\CCTableView\CustomCCTableViewCell.h" />
     <ClInclude Include="..\Classes\tests\CCTableView\TableViewTest.h" />

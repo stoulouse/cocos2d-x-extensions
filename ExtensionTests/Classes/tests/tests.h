@@ -13,6 +13,7 @@
 #include "SlidingMenuTest/SlidingMenuTest.h"
 #include "CCTableView/TableViewTest.h"
 #include "CCNetworkTest/CCNetworkTest.h"
+#include "CCMosquittoClient/CCMosquittoClientTest.h"
 
 enum
 {
@@ -28,6 +29,7 @@ enum
     TEST_SLIDING_MENU,
     TEST_TABLE_VIEW,
 	TEST_CCNETWORK_VIEW,
+	TEST_CCMOSQUITTO,
 
     TESTS_COUNT,
 };
@@ -45,6 +47,7 @@ const std::string g_aTestNames[TESTS_COUNT] = {
     "SlidingMenu",
     "TableView",
 	"CCNetwork",
+	"CCMosquittoClient",
 };
 
 #endif

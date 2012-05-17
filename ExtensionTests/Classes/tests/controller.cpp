@@ -39,6 +39,8 @@ static TestScene* CreateTestScene(int nIdx)
         pScene = new CCTableViewTestScene(); break;
 	case TEST_CCNETWORK_VIEW:
 		pScene = new CCNetworkTestScene(); break;
+	case TEST_CCMOSQUITTO:
+		pScene = new CCMosquittoClientTestScene(); break;
     default:
         break;
     }
