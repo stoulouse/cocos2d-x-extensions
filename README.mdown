@@ -39,7 +39,7 @@ Extensions
  * **SlidingMenu** - Works.
  * **TableView** - Test does not work.
  * **CCNetwork** - Working, Asyncronous json parser.
-
+ * **CCMosquittoClient** - Working, MQTT client.
 Contributing
 ================
 Looking for bugs or TODO's? Check the [issues](https://github.com/jandujar/cocos2d-x-extensions/issues "Issues") page.  
