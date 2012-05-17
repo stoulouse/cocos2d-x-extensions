@@ -55,6 +55,9 @@ class CCControlSlider: public CCControl
 	CC_SYNTHESIZE_READONLY(CCSprite*, m_progressSprite, ProgressSprite);
 	CC_SYNTHESIZE_READONLY(CCSprite*, m_backgroundSprite, BackgroundSprite);
 
+protected:
+	float uiScale, spriteScale;
+
 public:
 
 	virtual ~CCControlSlider();

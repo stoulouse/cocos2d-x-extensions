@@ -51,7 +51,6 @@ protected:
 public:
 	static CCControlColourPicker* colourPicker();
 	virtual bool init();
-	//virtual ~CCControlColourPicker();
 	void hueSliderValueChanged(CCObject * sender);
 	void colourSliderValueChanged(CCObject * sender);
 

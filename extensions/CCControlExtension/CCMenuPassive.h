@@ -17,6 +17,8 @@ class CCMenuPassive : public CCLayer, public CCRGBAProtocol
 		CC_PROPERTY(GLubyte, m_cOpacity, Opacity);
 
 public:
+		CCMenuPassive() : m_cOpacity(0){}
+		virtual ~CCMenuPassive(){}
 		/** creates an empty CCMenu */
         static CCMenuPassive* node();
 
@@ -40,10 +42,14 @@ public:
 		void alignItemsVerticallyWithPadding(float padding);
 
 		/** align items horizontally */
+		void leftAlignItemsHorizontally();
+		void rightAlignItemsHorizontally();
 		void alignItemsHorizontally();
 		/** align items horizontally with padding
 		@since v0.7.2
 		*/
+		void leftAlignItemsHorizontallyWithPadding(float padding);
+		void rightAlignItemsHorizontallyWithPadding(float padding);
 		void alignItemsHorizontallyWithPadding(float padding);
 
 		/** align items in rows of columns */

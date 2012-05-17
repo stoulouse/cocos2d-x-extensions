@@ -7,8 +7,10 @@
 #include "CCControlHuePicker.h"
 #include "CCControlSaturationBrightnessPicker.h"
 #include "CCControlSlider.h"
+#include "CCControlCheckBox.h"
 #include "CCMenuPassive.h"
 #include "CCSpacer.h"
+#include "CCSetting.h"
 #include "CCControlSwitch.h"
 
 #endif

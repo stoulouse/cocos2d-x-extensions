@@ -40,13 +40,12 @@ enum
 	{
 		if (CCLayer::init())
 		{
-			//this->m_bIsTouchEnabled = false;
+			this->m_bIsTouchEnabled = false;
 
 			// menu in the center of the screen
 			CCSize s = CCDirector::sharedDirector()->getWinSize();
 
-			// Set the default anchor point
-			setIsRelativeAnchorPoint(false);
+			this->m_bIsRelativeAnchorPoint = false;
 			setAnchorPoint(ccp(0.5f, 0.5f));
 			this->setContentSize(s);
 
@@ -126,6 +125,102 @@ enum
 		setContentSize(CCSizeMake(width, height));
 	}
 
+	void CCMenuPassive::leftAlignItemsHorizontally(void)
+	{
+		this->leftAlignItemsHorizontallyWithPadding(kDefaultPadding);
+	}
+
+	void CCMenuPassive::leftAlignItemsHorizontallyWithPadding(float padding)
+	{
+
+		float width = -padding;
+		if (m_pChildren && m_pChildren->count() > 0)
+		{
+            CCObject* pObject = NULL;
+            CCARRAY_FOREACH(m_pChildren, pObject)
+            {
+                CCNode* pChild = dynamic_cast<CCNode*>(pObject);
+                if (pChild)
+                {
+                    width += pChild->getContentSize().width * pChild->getScaleX() + padding;
+                }
+            }
+		}
+
+		float height=0;
+		float x = -width / 2.0f;
+		CCSize size;
+		size.width = size.height = 0;
+		if (m_pChildren && m_pChildren->count() > 0)
+		{
+            CCObject* pObject = NULL;
+            CCARRAY_FOREACH(m_pChildren, pObject)
+            {
+                CCNode* pChild = dynamic_cast<CCNode*>(pObject);
+                if (pChild)
+                {
+					height=max(height, pChild->getContentSize().height);
+                    pChild->setPosition(ccp(width/2+x + pChild->getContentSize().width * pChild->getScaleX() / 2.0f, 0));
+					pChild->setAnchorPoint(ccp(0.5f, 0.5f));
+     				x += pChild->getContentSize().width * pChild->getScaleX() + padding;
+					size.width += pChild->getContentSize().width * pChild->getScaleX();
+					size.height = max(size.height, pChild->getContentSize().height * pChild->getScaleX());
+                }
+            }
+			size.width += (m_pChildren->count() - 1) * padding;			
+			setContentSize(size);
+		}
+		
+		
+	}
+
+	void CCMenuPassive::rightAlignItemsHorizontally(void)
+	{
+		this->rightAlignItemsHorizontallyWithPadding(kDefaultPadding);
+	}
+
+	void CCMenuPassive::rightAlignItemsHorizontallyWithPadding(float padding)
+	{
+
+		float width = -padding;
+		if (m_pChildren && m_pChildren->count() > 0)
+		{
+            CCObject* pObject = NULL;
+            CCARRAY_FOREACH(m_pChildren, pObject)
+            {
+                CCNode* pChild = dynamic_cast<CCNode*>(pObject);
+                if (pChild)
+                {
+                    width += pChild->getContentSize().width * pChild->getScaleX() + padding;
+                }
+            }
+		}
+
+		float height=0;
+		float x = -width / 2.0f;
+		CCSize size;
+		size.width = size.height = 0;
+		if (m_pChildren && m_pChildren->count() > 0)
+		{
+            CCObject* pObject = NULL;
+            CCARRAY_FOREACH(m_pChildren, pObject)
+            {
+                CCNode* pChild = dynamic_cast<CCNode*>(pObject);
+                if (pChild)
+                {
+					height=max(height, pChild->getContentSize().height);
+                    pChild->setPosition(ccp(-width/2+x + pChild->getContentSize().width * pChild->getScaleX() / 2.0f, 0));
+					pChild->setAnchorPoint(ccp(0.5f, 0.5f));
+     				x += pChild->getContentSize().width * pChild->getScaleX() + padding;
+					size.width += pChild->getContentSize().width * pChild->getScaleX();
+					size.height = max(size.height, pChild->getContentSize().height * pChild->getScaleX());
+                }
+            }
+			size.width += (m_pChildren->count() - 1) * padding;			
+			setContentSize(size);
+		}		
+	}
+
 	void CCMenuPassive::alignItemsHorizontally(void)
 	{
 		this->alignItemsHorizontallyWithPadding(kDefaultPadding);
@@ -150,6 +245,8 @@ enum
 
 		float height=0;
 		float x = -width / 2.0f;
+		CCSize size;
+		size.width = size.height = 0;
 		if (m_pChildren && m_pChildren->count() > 0)
 		{
             CCObject* pObject = NULL;
@@ -161,11 +258,15 @@ enum
 					height=max(height, pChild->getContentSize().height);
                     pChild->setPosition(ccp(x + pChild->getContentSize().width * pChild->getScaleX() / 2.0f, 0));
      				x += pChild->getContentSize().width * pChild->getScaleX() + padding;
+					size.width += pChild->getContentSize().width * pChild->getScaleX();
+					size.height = max(size.height, pChild->getContentSize().height * pChild->getScaleX());
                 }
             }
+			size.width += (m_pChildren->count() - 1) * padding;			
+			setContentSize(size);
 		}		
-		setContentSize(CCSizeMake(width, height));
 	}
+
 
 	void CCMenuPassive::alignItemsInColumns(unsigned int columns, ...)
 	{

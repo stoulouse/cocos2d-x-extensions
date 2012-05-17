@@ -51,7 +51,6 @@ public:
 	virtual void setIsHighlighted(bool enabled);
 protected:
 	// CCRGBAProtocol
-	//bool m_bIsOpacityModifyRGB;
 
 	/** Adjust the background image. YES by default. If the property is set to NO, the 
 	background will use the prefered size of the background image. */
@@ -63,10 +62,8 @@ protected:
 	/** The current color used to display the title. */
 	CC_SYNTHESIZE_READONLY_PASS_BY_REF(ccColor3B, m_currentTitleColor, CurrentTitleColor);
 	/** The current title label. */
-	//CC_PROPERTY(CCNode*, m_titleLabel, TitleLabel); 
 	CCNode* m_titleLabel;
 	/** The current background sprite. */
-	//CC_PROPERTY(CCScale9Sprite*, m_backgroundSprite, BackgroundSprite);
 	CCScale9Sprite* m_backgroundSprite;
 
 	/** Flag to know if the button is currently pushed.  */

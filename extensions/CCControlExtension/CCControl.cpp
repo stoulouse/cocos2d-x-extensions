@@ -37,8 +37,6 @@ bool CCControl::init()
 {
 	if (CCLayer::init())
 	{
-		//this->setIsTouchEnabled(true);
-		//m_bIsTouchEnabled=true;
 	    // Initialise instance variables
 		m_nState=CCControlStateNormal;
 		m_bEnabled=true;
@@ -50,8 +48,6 @@ bool CCControl::init()
 		this->setDefaultTouchPriority(m_nDefaultTouchPriority);
         // Initialise the tables
 		dispatchTable=new CCMutableDictionary<CCControlState,CCMutableArray<CCInvocation*>*>();	
-		//dispatchTable->autorelease();
-		//   dispatchTable_ = [[NSMutableDictionary alloc] initWithCapacity:1];
 		return true;
     }
 	else
@@ -63,21 +59,19 @@ CCControl::~CCControl()
 	CC_SAFE_RELEASE(dispatchTable);
 }
 
-	//Menu - Events
+//Menu - Events
 void CCControl::registerWithTouchDispatcher()
 {
-	CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this, kCCMenuTouchPriority, true);
+	CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this, 0, true);
 }
 
 void CCControl::onEnter()
 {
-	//CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this, m_nDefaultTouchPriority, true);
 	CCLayer::onEnter();
 }
 
 void CCControl::onExit()
 {
-	//CCTouchDispatcher::sharedDispatcher()->removeDelegate(this);
 	CCLayer::onExit();
 }
 
@@ -172,7 +166,7 @@ void CCControl::removeTargetWithActionForControlEvent(CCObject* target, SEL_Menu
 	//remove all invocations if the target and action are null
 	//TODO: should the invocations be deleted, or just removed from the array? Won't that cause issues if you add a single invocation for multiple events?
 	bool bDeleteObjects=true;
-    if (target == NULL && action == NULL)
+    if (target && action)
     {
 		//remove objects
 		eventInvocationList->removeAllObjects(bDeleteObjects);
@@ -265,7 +259,7 @@ bool CCControl::getIsOpacityModifyRGB()
 
 CCPoint CCControl::getTouchLocation(CCTouch* touch)
 {
-	CCPoint touchLocation=touch->locationInView();;                      // Get the touch position
+	CCPoint touchLocation=touch->locationInView(touch->view());;                      // Get the touch position
 	touchLocation           = CCDirector::sharedDirector()->convertToGL(touchLocation);  // Convert the position to GL space
 	touchLocation           = this->getParent()->convertToNodeSpace(touchLocation);         // Convert to the node space of this class
     

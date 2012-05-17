@@ -67,15 +67,22 @@ CCControlSlider* CCControlSlider::sliderWithSprites(CCSprite * backgroundSprite,
 		setIsRelativeAnchorPoint(true);
 		setIsTouchEnabled(true);
 
+		CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
+		
+		uiScale=GameState::sharedGameState()->getUIScale();
+		spriteScale=GameState::sharedGameState()->getSpriteScale();
+		
 		m_backgroundSprite=backgroundSprite;
 		m_progressSprite=progessSprite;
 		m_thumbItem=thumbItem;
 
+		m_backgroundSprite->setScale(spriteScale);
+		m_progressSprite->setScale(spriteScale);
+		m_thumbItem->setScale(spriteScale);
         // Defines the content size
 		CCRect maxRect                  = CCControlUtils::CCRectUnion(backgroundSprite->boundingBox(), thumbItem->boundingBox());
-		CCSize size=CCSizeMake(maxRect.size.width+2*SLIDER_MARGIN_H, maxRect.size.height+2*SLIDER_MARGIN_V);
+		CCSize size=CCSizeMake(maxRect.size.width+2*SLIDER_MARGIN_H*uiScale, maxRect.size.height+2*SLIDER_MARGIN_V*uiScale);
 		setContentSize(size);
-		//setContentSize(CCSizeMake(backgroundSprite->getContentSize().width, thumbItem->getContentSize().height));
 		// Add the slider background
 		m_backgroundSprite->setAnchorPoint(ccp(0.5f, 0.5f));
 		m_backgroundSprite->setPosition(ccp(size.width / 2, size.height / 2));
@@ -83,11 +90,11 @@ CCControlSlider* CCControlSlider::sliderWithSprites(CCSprite * backgroundSprite,
 
         // Add the progress bar
 		m_progressSprite->setAnchorPoint(ccp(0.0f, 0.5f));
-		m_progressSprite->setPosition(ccp(0.0f+SLIDER_MARGIN_H, size.height / 2));
+		m_progressSprite->setPosition(ccp(0.0f+SLIDER_MARGIN_H*uiScale, size.height / 2));
         addChild(m_progressSprite);
 
 		// Add the slider thumb  
-		m_thumbItem->setPosition(ccp(0+SLIDER_MARGIN_H, size.height / 2));
+		m_thumbItem->setPosition(ccp(0+SLIDER_MARGIN_H*uiScale, size.height / 2));
         addChild(m_thumbItem);
         
         // Init default values
@@ -111,8 +118,6 @@ CCControlSlider* CCControlSlider::sliderWithSprites(CCSprite * backgroundSprite,
 	 //if we're snapping
 	 if (m_snappingInterval>=0)
 	 {
-		 //int nTotal=(int)(ceil(m_maximumValue-m_minimumValue)/m_snappingInterval);
-		 //floor (n + 0.5f) == round(n)
 		 value=floor(0.5f + value/m_snappingInterval)*m_snappingInterval;
 	 }
 	 m_value=value;
@@ -120,7 +125,7 @@ CCControlSlider* CCControlSlider::sliderWithSprites(CCSprite * backgroundSprite,
 	// Update thumb position for new value
     float percent               = (m_value - m_minimumValue) / (m_maximumValue - m_minimumValue);
 	CCPoint pos= m_thumbItem->getPosition();
-	pos.x                       = percent * m_backgroundSprite->getContentSize().width+SLIDER_MARGIN_H;
+	pos.x                       = percent * m_backgroundSprite->getContentSize().width*spriteScale+SLIDER_MARGIN_H*uiScale;
 	m_thumbItem->setPosition(pos);
     
     // Stretches content proportional to newLevel
@@ -157,9 +162,9 @@ CCControlSlider* CCControlSlider::sliderWithSprites(CCSprite * backgroundSprite,
    {
         touchLocation.x     = 0;
    } 
-   else if (touchLocation.x > m_backgroundSprite->getContentSize().width+SLIDER_MARGIN_H)
+   else if (touchLocation.x > m_backgroundSprite->getContentSize().width*spriteScale+SLIDER_MARGIN_H*uiScale)
    {
-		touchLocation.x     = m_backgroundSprite->getContentSize().width+SLIDER_MARGIN_H;
+		touchLocation.x     = m_backgroundSprite->getContentSize().width*spriteScale+SLIDER_MARGIN_H*uiScale;
    }    
     return touchLocation;
 }
@@ -208,6 +213,6 @@ void CCControlSlider::sliderEnded(CCPoint location)
 
 float CCControlSlider::valueForLocation(CCPoint location)
 {
-	float percent = (location.x-SLIDER_MARGIN_H)/ m_backgroundSprite->getContentSize().width;
+	float percent = (location.x-SLIDER_MARGIN_H*uiScale)/ (m_backgroundSprite->getContentSize().width*spriteScale);
     return m_minimumValue + percent * (m_maximumValue - m_minimumValue);
 }

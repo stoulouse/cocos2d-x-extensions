@@ -151,6 +151,4 @@ void CCControlHuePicker::ccTouchMoved(CCTouch* touch, CCEvent* event)
 	//small modification: this allows changing of the colour, even if the touch leaves the bounding area
 	updateSliderPosition(touchLocation);
 	sendActionsForControlEvents(CCControlEventValueChanged);
-    // Check the touch position on the slider
-    //checkSliderPosition(touchLocation);
 }
