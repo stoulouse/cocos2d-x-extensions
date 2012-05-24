@@ -58,9 +58,11 @@ class CCNetwork : public cocos2d::CCObject {
 		static void *run( void *arg );
 
 		cJSON *getResultJSON();
+		cJSON *getResultJSONSynchronous();
 		void freeResultJSON();
 
 		static CCNetwork *loadJSON( const char *url, cocos2d::CCObject *target, cocos2d::SEL_CallFunc callback );
+		static CCNetwork * loadJSONSynchronous( const char *url);
 };
 
 #endif

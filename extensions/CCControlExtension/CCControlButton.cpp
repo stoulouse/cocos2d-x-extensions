@@ -97,9 +97,8 @@ bool CCControlButton::initWithLabelAndBackgroundSprite(CCNode* node, CCScale9Spr
 		m_nState=CCControlStateNormal;
 		
 		//default margins
-		float uiScale=GameState::sharedGameState()->getUIScale();
-		m_marginH=16*uiScale;	
-		m_marginV=12*uiScale;
+		m_marginH=24;	
+		m_marginV=12;
 
         // Layout update
 		needsLayout();
@@ -122,7 +121,9 @@ CCControlButton* CCControlButton::buttonWithLabelAndBackgroundSprite(CCNode* lab
 bool CCControlButton::initWithTitleAndFontNameAndFontSize(string title, const char * fontName, float fontSize)
 {
 	CCLabelTTF *label = CCLabelTTF::labelWithString(title.c_str(), fontName, fontSize);
-	return initWithLabelAndBackgroundSprite(label, CCScale9Sprite::node());
+	//TODO: return correct value
+	//return initWithLabelAndBackgroundSprite(label, CCScale9Sprite::node());
+	return NULL;
 }
 
 CCControlButton* CCControlButton::buttonWithTitleAndFontNameAndFontSize(string title, const char * fontName, float fontSize)

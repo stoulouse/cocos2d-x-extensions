@@ -108,6 +108,11 @@ cJSON *CCNetwork::getResultJSON()
         return NULL;
 }
 
+cJSON *CCNetwork::getResultJSONSynchronous()
+{
+    return cJSONResult;
+}
+
 void CCNetwork::freeResultJSON()
 {
     if( cJSONResult != NULL )
@@ -128,6 +133,55 @@ CCNetwork * CCNetwork::loadJSON( const char *url, CCObject *target, SEL_CallFunc
 		network->url = std::string(url);
 
         if( pthread_create( &network->threadInfo, NULL, CCNetwork::run, network ) == 0 )
+        {
+            network->autorelease();
+            return network;
+        }
+
+        CC_SAFE_DELETE( network );
+    }
+    return NULL;
+}
+
+CCNetwork * CCNetwork::loadJSONSynchronous( const char *url)
+{
+    CCNetwork *network = new CCNetwork();
+
+    if( network != NULL )
+    {
+		network->url = std::string(url);
+		CURL *curl;
+		CURLcode res;
+		int result = 1;
+		string buffer;
+
+		network->cJSONResult = NULL;
+
+		curl_global_init( CURL_GLOBAL_ALL );
+
+		curl = curl_easy_init();
+
+		if( curl )
+		{
+			curl_easy_setopt( curl, CURLOPT_URL, network->url.c_str() );
+			curl_easy_setopt( curl, CURLOPT_FOLLOWLOCATION, 1L );
+			curl_easy_setopt( curl, CURLOPT_WRITEFUNCTION, CCNetwork::writer );
+			curl_easy_setopt( curl, CURLOPT_WRITEDATA, &buffer );
+
+			res = curl_easy_perform( curl );
+
+			curl_easy_cleanup( curl );
+
+			if (res == 0)
+			{
+				network->cJSONResult = cJSON_Parse( buffer.c_str() );
+
+				if( network->cJSONResult != NULL )
+					result = 0;
+			}
+		}
+
+        if( result == 0 )
         {
             network->autorelease();
             return network;

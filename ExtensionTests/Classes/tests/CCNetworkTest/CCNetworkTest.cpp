@@ -81,13 +81,34 @@ void CCNetworkTest::onEnter()
 
 void CCNetworkTest::menuCallback(CCObject* pSender)
 {
+	std::string url("http://www.google.com/calendar/feeds/developer-calendar@google.com/public/full?alt=json");
+
+	// For synchronous version, uncommend this lines and commend the others
+	/*
+		network = CCNetwork::loadJSONSynchronous( url.c_str());//, this, callfunc_selector( CCNetworkTest::dataArrived ) );
+
+		cJSON *result = network->getResultJSONSynchronous();
+
+		char *text = cJSON_Print(result);
+		CCLog("JSON Readed \n%s",text);
+		free(text);
+	*/
+
+	// /*
 	if(!isThreadRunning){
-		std::string url("http://www.google.com/calendar/feeds/developer-calendar@google.com/public/full?alt=json");
 		isThreadRunning = true;
 		scheduleUpdate();
-		network = CCNetwork::loadJSON( url.c_str(), this, callfunc_selector( CCNetworkTest::dataArrived ) );
+		network = CCNetwork::loadJSONSynchronous( url.c_str(), this, callfunc_selector( CCNetworkTest::dataArrived ) );
+
+		cJSON *result = network->getResultJSON();
+
+		char *text = cJSON_Print(result);
+		CCLog("JSON Readed \n%s",text);
+		free(text);
 		network->retain();
 	}
+
+	// */
 }
 
 void CCNetworkTest::update( ccTime dt )

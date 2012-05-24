@@ -66,22 +66,14 @@ CCControlSlider* CCControlSlider::sliderWithSprites(CCSprite * backgroundSprite,
 	 {
 		setIsRelativeAnchorPoint(true);
 		setIsTouchEnabled(true);
-
-		CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
-		
-		uiScale=GameState::sharedGameState()->getUIScale();
-		spriteScale=GameState::sharedGameState()->getSpriteScale();
-		
+	
 		m_backgroundSprite=backgroundSprite;
 		m_progressSprite=progessSprite;
 		m_thumbItem=thumbItem;
 
-		m_backgroundSprite->setScale(spriteScale);
-		m_progressSprite->setScale(spriteScale);
-		m_thumbItem->setScale(spriteScale);
         // Defines the content size
 		CCRect maxRect                  = CCControlUtils::CCRectUnion(backgroundSprite->boundingBox(), thumbItem->boundingBox());
-		CCSize size=CCSizeMake(maxRect.size.width+2*SLIDER_MARGIN_H*uiScale, maxRect.size.height+2*SLIDER_MARGIN_V*uiScale);
+		CCSize size=CCSizeMake(maxRect.size.width+2*SLIDER_MARGIN_H, maxRect.size.height+2*SLIDER_MARGIN_V*uiScale);
 		setContentSize(size);
 		// Add the slider background
 		m_backgroundSprite->setAnchorPoint(ccp(0.5f, 0.5f));
@@ -90,11 +82,11 @@ CCControlSlider* CCControlSlider::sliderWithSprites(CCSprite * backgroundSprite,
 
         // Add the progress bar
 		m_progressSprite->setAnchorPoint(ccp(0.0f, 0.5f));
-		m_progressSprite->setPosition(ccp(0.0f+SLIDER_MARGIN_H*uiScale, size.height / 2));
+		m_progressSprite->setPosition(ccp(0.0f+SLIDER_MARGIN_H, size.height / 2));
         addChild(m_progressSprite);
 
 		// Add the slider thumb  
-		m_thumbItem->setPosition(ccp(0+SLIDER_MARGIN_H*uiScale, size.height / 2));
+		m_thumbItem->setPosition(ccp(0+SLIDER_MARGIN_H, size.height / 2));
         addChild(m_thumbItem);
         
         // Init default values
