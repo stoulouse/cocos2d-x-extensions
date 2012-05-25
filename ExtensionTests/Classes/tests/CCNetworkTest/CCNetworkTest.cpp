@@ -98,7 +98,7 @@ void CCNetworkTest::menuCallback(CCObject* pSender)
 	if(!isThreadRunning){
 		isThreadRunning = true;
 		scheduleUpdate();
-		network = CCNetwork::loadJSONSynchronous( url.c_str(), this, callfunc_selector( CCNetworkTest::dataArrived ) );
+		network = CCNetwork::loadJSON( url.c_str(), this, callfunc_selector( CCNetworkTest::dataArrived ) );
 
 		cJSON *result = network->getResultJSON();
 
