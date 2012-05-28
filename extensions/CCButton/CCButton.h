@@ -5,10 +5,9 @@
 //  Created by  小 苏 http://www.cocos2d-x.org/boards/6/topics/7963
 //
 
+#pragma once
 #include "cocos2d.h" 
 #define TAP_MAX_DRAG 10
-
-using namespace cocos2d;
 
 enum {
     CCControlStateNormal       = 0,
@@ -18,22 +17,22 @@ enum {
 };
 typedef unsigned int CCControlState;
 
-class CCButton : public CCNode, public CCTargetedTouchDelegate
+class CCButton : public cocos2d::CCNode, public cocos2d::CCTargetedTouchDelegate
 {
 private:
-    bool initWithFile(const char* filename, CCObject* target, SEL_MenuHandler selector);
-    CCObject* target;
-    SEL_MenuHandler selector;
+    bool initWithFile(const char* filename, cocos2d::CCObject* target, cocos2d::SEL_MenuHandler selector);
+    cocos2d::CCObject* target;
+    cocos2d::SEL_MenuHandler selector;
     bool touched;
-    CCPoint touchPoint;
+    cocos2d::CCPoint touchPoint;
 
     bool isDisabled;
 
     CCControlState curState;
 
-    CCMutableDictionary<int,CCNode*> * backgroundNodes; //zOrder is 0
-    CCMutableDictionary<int,CCNode*> * touchNodes;        //zOrder is 1
-    CCMutableDictionary<int,CCString*> * titleCCStrings;  //zOrder is 2
+    cocos2d::CCMutableDictionary<int, cocos2d::CCNode*> * backgroundNodes; //zOrder is 0
+    cocos2d::CCMutableDictionary<int, cocos2d::CCNode*> * touchNodes;        //zOrder is 1
+    cocos2d::CCMutableDictionary<int, cocos2d::CCString*> * titleCCStrings;  //zOrder is 2
 
     void setState(CCControlState mState);
 
@@ -41,8 +40,8 @@ public:
     CCButton();
     ~CCButton();
 
-    void initWithFile(CCObject* target, SEL_MenuHandler selector,const char * mNormal,const char * mSelected,const char * mDisabled=NULL);
-    static CCButton * buttonWithFiles(CCObject* target, SEL_MenuHandler selector,const char * mNormal,const char * mSelected,const char * mDisabled=NULL);
+    void initWithFile(cocos2d::CCObject* target, cocos2d::SEL_MenuHandler selector,const char * mNormal,const char * mSelected,const char * mDisabled=NULL);
+    static CCButton * buttonWithFiles(cocos2d::CCObject* target, cocos2d::SEL_MenuHandler selector,const char * mNormal,const char * mSelected,const char * mDisabled=NULL);
 
     void setTitleForState(const char * mTitle,CCControlState mState);
     const char* titleForState(CCControlState mState);
@@ -50,8 +49,8 @@ public:
     void setDisable(bool mIsDisabled);
 
     //todo
-    virtual void setTitleColorForState(ccColor3B mColor,CCControlState mState){CC_UNUSED_PARAM(mColor);CC_UNUSED_PARAM(mState);};
-    virtual ccColor3B titleColorForState(CCControlState mState){CC_UNUSED_PARAM(mState);return ccYELLOW;};
+    virtual void setTitleColorForState(cocos2d::ccColor3B mColor,CCControlState mState){CC_UNUSED_PARAM(mColor);CC_UNUSED_PARAM(mState);};
+    virtual cocos2d::ccColor3B titleColorForState(CCControlState mState){CC_UNUSED_PARAM(mState);return cocos2d::ccYELLOW;};
 
     void setImageForState(CCNode* mNode,CCControlState mState);
     CCNode * imageForState(CCControlState mState);
@@ -59,14 +58,14 @@ public:
     CCNode * backgroundImageForState(CCControlState mState);
 
     // touch events
-    CCRect rect();
-    bool containsTouchLocation(CCTouch* touch);
+    cocos2d::CCRect rect();
+    bool containsTouchLocation(cocos2d::CCTouch* touch);
     virtual void onEnter();
     virtual void onExit();
-    virtual bool ccTouchBegan(CCTouch* pTouch, CCEvent* pEvent);
-    virtual void ccTouchMoved(CCTouch* pTouch, CCEvent* pEvent);
-    virtual void ccTouchEnded(CCTouch* pTouch, CCEvent* pEvent);
-    virtual void ccTouchCancelled(CCTouch *pTouch, CCEvent *pEvent);
+    virtual bool ccTouchBegan(cocos2d::CCTouch* pTouch, cocos2d::CCEvent* pEvent);
+    virtual void ccTouchMoved(cocos2d::CCTouch* pTouch, cocos2d::CCEvent* pEvent);
+    virtual void ccTouchEnded(cocos2d::CCTouch* pTouch, cocos2d::CCEvent* pEvent);
+    virtual void ccTouchCancelled(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent);
     virtual void touchDelegateRetain();
     virtual void touchDelegateRelease();
 };
