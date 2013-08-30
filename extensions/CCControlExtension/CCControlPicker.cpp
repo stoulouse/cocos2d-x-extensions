@@ -454,16 +454,16 @@ void CCControlPicker::setContentSize(const CCSize & size)
 {
 	superClass::setContentSize(size);
 
-	CCPoint center                      = ccp (getContentSize().width / 2, getContentSize().height /2);
+	CCPoint center                      = ccp (size.width / 2, size.height /2);
 
 	if (_foregroundSprite) {
 		_foregroundSprite->setContentSize(size);
         _foregroundSprite->setPosition( center );
 	}
 	if (_selectionSprite) {
-		CCSize selectionSize = CCSizeMake(getContentSize().width, rowSize().height);
+		CCSize selectionSize = CCSizeMake(getContentSize().width, rowSize().height * 2);
 		if (delegate) {
-			selectionSize = delegate->rowSizeForControlPicker(this);
+//			selectionSize = delegate->rowSizeForControlPicker(this);
 		}
 		_selectionSprite->setContentSize(selectionSize);
 		_selectionSprite->setPosition( center );
