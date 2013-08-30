@@ -70,6 +70,17 @@ protected:
 	ccColor3B m_sColorUnmodified;
 	bool m_bIsOpacityModifyRGB;
 	
+//	virtual void setOpacityModifyRGB(bool bValue)
+//	{
+//		ccColor3B oldColor    = this->m_tColor;
+//		m_bIsOpacityModifyRGB = bValue;
+//		this->m_tColor        = oldColor;
+//	}
+//	virtual bool isOpacityModifyRGB()
+//	{
+//		return m_bIsOpacityModifyRGB;
+//	}
+	
 public:
 	
 	void virtual setContentSize(const CCSize &size);
@@ -262,12 +273,12 @@ public:
 	 Textures with premultiplied alpha will have this property by default on YES. Otherwise the default value is NO
 	 @since v0.8
 	 */
-	virtual void setIsOpacityModifyRGB(bool bValue);
+	virtual void setOpacityModifyRGB(bool bValue);
 	
 	/** returns whether or not the opacity will be applied using glColor(R,G,B,opacity) or glColor(opacity, opacity, opacity, opacity);
 	 @since v0.8
 	 */
-	virtual bool getIsOpacityModifyRGB(void);
+	virtual bool isOpacityModifyRGB(void);
 	
 };
 

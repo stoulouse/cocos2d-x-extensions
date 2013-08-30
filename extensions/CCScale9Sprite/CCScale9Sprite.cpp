@@ -26,7 +26,7 @@ bool CCScale9Sprite::initWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect
 	scale9Image = batchnode;
 	
 	// If there is no given rect
-	if ( CCRect::CCRectEqualToRect(rect, CCRectZero) )
+	if ( rect.equals(CCRectZero) )
 	{
 		// Get the texture size as original
 		CCSize textureSize = scale9Image->getTextureAtlas()->getTexture()->getContentSize();
@@ -42,7 +42,7 @@ bool CCScale9Sprite::initWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect
 	this->setAnchorPoint(ccp(0.5f, 0.5f));
 	
 	// If there is no specified center region
-	if ( CCRect::CCRectEqualToRect(m_capInsets, CCRectZero) )
+	if ( m_capInsets.equals(CCRectZero) )
 	{
 		// Apply the 3x3 grid format
 		m_capInsets = CCRectMake(
@@ -63,25 +63,25 @@ bool CCScale9Sprite::initWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect
 	//
 	
 	// Centre
-	centre = CCSprite::spriteWithBatchNode(scale9Image, m_capInsets);
+	centre = CCSprite::createWithTexture(scale9Image->getTexture(), m_capInsets);
 	scale9Image->addChild(centre ,0 ,pCentre);
 	
 	// Top
-	top = CCSprite::spriteWithBatchNode(scale9Image, CCRectMake(m_capInsets.origin.x,
+	top = CCSprite::createWithTexture(scale9Image->getTexture(), CCRectMake(m_capInsets.origin.x,
 																t,
 																m_capInsets.size.width,
 																m_capInsets.origin.y - t));
 	scale9Image->addChild(top, 1, pTop);
 	
 	// Bottom
-	bottom = CCSprite::spriteWithBatchNode(scale9Image, CCRectMake( m_capInsets.origin.x,
+	bottom = CCSprite::createWithTexture(scale9Image->getTexture(), CCRectMake( m_capInsets.origin.x,
 																   m_capInsets.origin.y + m_capInsets.size.height,
 																   m_capInsets.size.width,
 																   h - (m_capInsets.origin.y - t + m_capInsets.size.height) ));
 	scale9Image->addChild(bottom, 1, pBottom);
 	
 	// Left
-	left = CCSprite::spriteWithBatchNode(scale9Image, CCRectMake(
+	left = CCSprite::createWithTexture(scale9Image->getTexture(), CCRectMake(
 																 l,
 																 m_capInsets.origin.y,
 																 m_capInsets.origin.x - l,
@@ -89,7 +89,7 @@ bool CCScale9Sprite::initWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect
 	scale9Image->addChild(left, 1, pLeft);
 	
 	// Right
-	right = CCSprite::spriteWithBatchNode(scale9Image, CCRectMake(
+	right = CCSprite::createWithTexture(scale9Image->getTexture(), CCRectMake(
 																  m_capInsets.origin.x + m_capInsets.size.width,
 																  m_capInsets.origin.y,
 																  w - (m_capInsets.origin.x - l + m_capInsets.size.width),
@@ -97,7 +97,7 @@ bool CCScale9Sprite::initWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect
 	scale9Image->addChild(right, 1, pRight);
 	
 	// Top left
-	topLeft = CCSprite::spriteWithBatchNode(scale9Image, CCRectMake(
+	topLeft = CCSprite::createWithTexture(scale9Image->getTexture(), CCRectMake(
 																	l,
 																	t,
 																	m_capInsets.origin.x - l,
@@ -106,7 +106,7 @@ bool CCScale9Sprite::initWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect
 	scale9Image->addChild(topLeft, 2, pTopLeft);
 	
 	// Top right
-	topRight = CCSprite::spriteWithBatchNode(scale9Image, CCRectMake(
+	topRight = CCSprite::createWithTexture(scale9Image->getTexture(), CCRectMake(
 																	 m_capInsets.origin.x + m_capInsets.size.width,
 																	 t,
 																	 w - (m_capInsets.origin.x - l + m_capInsets.size.width),
@@ -115,7 +115,7 @@ bool CCScale9Sprite::initWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect
 	scale9Image->addChild(topRight, 2, pTopRight);
 	
 	// Bottom left
-	bottomLeft = CCSprite::spriteWithBatchNode(scale9Image, CCRectMake(
+	bottomLeft = CCSprite::createWithTexture(scale9Image->getTexture(), CCRectMake(
 																	   l,
 																	   m_capInsets.origin.y + m_capInsets.size.height,
 																	   m_capInsets.origin.x - l,
@@ -123,7 +123,7 @@ bool CCScale9Sprite::initWithBatchNode(CCSpriteBatchNode* batchnode, CCRect rect
 	scale9Image->addChild(bottomLeft, 2, pBottomLeft);
 	
 	// Bottom right
-	bottomRight = CCSprite::spriteWithBatchNode(scale9Image, CCRectMake(
+	bottomRight = CCSprite::createWithTexture(scale9Image->getTexture(), CCRectMake(
 																		m_capInsets.origin.x + m_capInsets.size.width,
 																		m_capInsets.origin.y + m_capInsets.size.height,
 																		w - (m_capInsets.origin.x - l + m_capInsets.size.width),
@@ -143,8 +143,8 @@ void CCScale9Sprite::setContentSize(const CCSize &size)
 	CCNode::setContentSize(size);
 	setAnchorPoint(ccp(0.5f,0.5f));
 	
-	CCLOG("scale9 set content size %0.2f %0.2f",size.width,size.height);
-	CCLOG("leftCap %0.2f rightCap %0.2f",topLeft->getContentSize().width,topRight->getContentSize().width);
+//	CCLOG("scale9 set content size %0.2f %0.2f",size.width,size.height);
+//	CCLOG("leftCap %0.2f rightCap %0.2f",topLeft->getContentSize().width,topRight->getContentSize().width);
 	
 	float sizableWidth = size.width - topLeft->getContentSize().width - topRight->getContentSize().width;
 	float sizableHeight = size.height - topLeft->getContentSize().height - bottomRight->getContentSize().height;
@@ -175,14 +175,14 @@ void CCScale9Sprite::setContentSize(const CCSize &size)
 	
 	centre->setPosition(ccp(despx, despy));
 	
-	CCLOG("Scale9 setContentSize %02.f x %02.f <%0.2f x %0.2f>",sizableWidth,sizableHeight,horizontalScale,verticalScale);
+//	CCLOG("Scale9 setContentSize %02.f x %02.f <%0.2f x %0.2f>",sizableWidth,sizableHeight,horizontalScale,verticalScale);
 }
 
 bool CCScale9Sprite::initWithFile(const char* file, CCRect rect,  CCRect capInsets)
 {
 	CCAssert(file != NULL, "Invalid file for sprite");
     
-    CCSpriteBatchNode *batchnode = CCSpriteBatchNode::batchNodeWithFile(file, 9);
+    CCSpriteBatchNode *batchnode = CCSpriteBatchNode::create(file, 9);
     bool pReturn = this->initWithBatchNode(batchnode, rect, capInsets);
     return pReturn;
 }
@@ -257,7 +257,7 @@ bool CCScale9Sprite::initWithSpriteFrame(CCSpriteFrame* spriteFrame, CCRect capI
 {
 	CCAssert(spriteFrame != NULL, "Sprite frame must be not nil");
     
-    CCSpriteBatchNode *batchnode = CCSpriteBatchNode::batchNodeWithTexture(spriteFrame->getTexture(), 9);
+    CCSpriteBatchNode *batchnode = CCSpriteBatchNode::createWithTexture(spriteFrame->getTexture(), 9);
     bool pReturn = this->initWithBatchNode(batchnode, spriteFrame->getRect(), capInsets);
     return pReturn;
 }
@@ -416,7 +416,7 @@ CCRect CCScale9Sprite::getCapInsets()
 	return m_capInsets;
 }
 
-void CCScale9Sprite::setIsOpacityModifyRGB(bool var)
+void CCScale9Sprite::setOpacityModifyRGB(bool var)
 {
 	m_bIsOpacityModifyRGB = var;
 	if (scale9Image->getChildren() && scale9Image->getChildren()->count() != 0)
@@ -427,7 +427,7 @@ void CCScale9Sprite::setIsOpacityModifyRGB(bool var)
 			CCRGBAProtocol* pNode = dynamic_cast<CCRGBAProtocol*>(child);
 			if (pNode)
 			{
-				pNode->setIsOpacityModifyRGB(m_bIsOpacityModifyRGB);
+				pNode->setOpacityModifyRGB(m_bIsOpacityModifyRGB);
 			}
 			//CCNode* pNode = (CCNode*) child;
 			//if (pNode)
@@ -441,7 +441,7 @@ void CCScale9Sprite::setIsOpacityModifyRGB(bool var)
 		}
 	}
 }
-bool CCScale9Sprite::getIsOpacityModifyRGB()
+bool CCScale9Sprite::isOpacityModifyRGB()
 {
 	return m_bIsOpacityModifyRGB;
 }

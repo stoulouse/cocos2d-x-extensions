@@ -42,12 +42,16 @@ bool CCControl::init()
 		m_bEnabled=true;
 		m_bSelected=false;
 		m_bHighlighted=false;
+		
+		m_bIsOpacityModifyRGB = false;
+		m_cOpacity = 0xFF;
+		m_tColor = ccc3(0, 0 ,0);
 
 		// Set the touch dispatcher priority by default to 1
 		m_nDefaultTouchPriority = 1;
 		this->setDefaultTouchPriority(m_nDefaultTouchPriority);
         // Initialise the tables
-		dispatchTable=new CCMutableDictionary<CCControlState,CCMutableArray<CCInvocation*>*>();	
+		dispatchTable=new CCDictionary();
 		return true;
     }
 	else
@@ -62,7 +66,7 @@ CCControl::~CCControl()
 //Menu - Events
 void CCControl::registerWithTouchDispatcher()
 {
-	CCTouchDispatcher::sharedDispatcher()->addTargetedDelegate(this, 0, true);
+	CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, 0, true);
 }
 
 void CCControl::onEnter()
@@ -84,12 +88,11 @@ void CCControl::sendActionsForControlEvents(CCControlEvent controlEvents)
         if ((controlEvents & (1 << i)))
         {
             // Call invocations
-			CCMutableArray<CCInvocation*>* invocationList=CCControl::dispatchListforControlEvent(1<<i);
+			CCArray* invocationList=CCControl::dispatchListforControlEvent(1<<i);
 			
-			CCMutableArray<CCInvocation *>::CCMutableArrayIterator it;
-			for (it = invocationList->begin(); it != invocationList->end(); it++) 
+			for (int i = 0; i < invocationList->count(); i++)
 			{
-				CCInvocation *invocation = *it;
+				CCInvocation *invocation = (CCInvocation*)invocationList->objectAtIndex(i);
 				invocation->invoke(this);
 			}                    
         }
@@ -129,7 +132,7 @@ void CCControl::addTargetWithActionForControlEvent(CCObject* target, SEL_MenuHan
 	CCInvocation *invocation=new CCInvocation(target, action, controlEvent);
 
     // Add the invocation into the dispatch list for the given control event
-	CCMutableArray<CCInvocation*> *eventInvocationList = dispatchListforControlEvent(controlEvent);
+	CCArray *eventInvocationList = dispatchListforControlEvent(controlEvent);
 	eventInvocationList->addObject(invocation);    
 }
 
@@ -161,7 +164,7 @@ void CCControl::removeTargetWithActionForControlEvents(CCObject* target, SEL_Men
 void CCControl::removeTargetWithActionForControlEvent(CCObject* target, SEL_MenuHandler action, CCControlEvent controlEvent)
 {
     // Retrieve all invocations for the given control event
-	CCMutableArray<CCInvocation*> *eventInvocationList=dispatchListforControlEvent(controlEvent);
+	CCArray *eventInvocationList=dispatchListforControlEvent(controlEvent);
     
 	//remove all invocations if the target and action are null
 	//TODO: should the invocations be deleted, or just removed from the array? Won't that cause issues if you add a single invocation for multiple events?
@@ -169,15 +172,14 @@ void CCControl::removeTargetWithActionForControlEvent(CCObject* target, SEL_Menu
     if (target && action)
     {
 		//remove objects
-		eventInvocationList->removeAllObjects(bDeleteObjects);
+		eventInvocationList->removeAllObjects();
     } 
 	else
     {
 			//normally we would use a predicate, but this won't work here. Have to do it manually			
-			CCMutableArray<CCInvocation *>::CCMutableArrayIterator it;
-			for (it = eventInvocationList->begin(); it != eventInvocationList->end(); it++) 
+		for (int i = 0; i < eventInvocationList->count(); i++)
 			{
-				CCInvocation *invocation = *it;
+				CCInvocation *invocation = (CCInvocation*)eventInvocationList->objectAtIndex(i);
 				bool shouldBeRemoved=true;
 				if (target)				
 					shouldBeRemoved=(target==invocation->getTarget());				
@@ -246,7 +248,7 @@ void CCControl::setIsOpacityModifyRGB(bool opacityModifyRGB)
 		CCRGBAProtocol* pNode = dynamic_cast<CCRGBAProtocol*>(child);		
 		if (pNode)
 		{
-			pNode->setIsOpacityModifyRGB(opacityModifyRGB);
+			pNode->setOpacityModifyRGB(opacityModifyRGB);
 		}
 	}
 }
@@ -259,28 +261,37 @@ bool CCControl::getIsOpacityModifyRGB()
 
 CCPoint CCControl::getTouchLocation(CCTouch* touch)
 {
-	CCPoint touchLocation=touch->locationInView();;                      // Get the touch position
+	CCPoint touchLocation=touch->getLocationInView();;                      // Get the touch position
 	touchLocation           = CCDirector::sharedDirector()->convertToGL(touchLocation);  // Convert the position to GL space
 	touchLocation           = this->getParent()->convertToNodeSpace(touchLocation);         // Convert to the node space of this class
     
     return touchLocation;
 }
 
+bool CCControl::hasVisibleParents()
+{
+    for( CCNode *c = getParent(); c != 0; c = c->getParent())
+		if(!c->isVisible())
+            return false;
+	
+    return true;
+}
+
 bool CCControl::isTouchInside(CCTouch* touch)
 {
 	CCPoint touchLocation=getTouchLocation(touch);
 	CCRect bBox=boundingBox();
-	return CCRect::CCRectContainsPoint(bBox, touchLocation);
+	return bBox.containsPoint(touchLocation);
 }
 
-CCMutableArray<CCInvocation*>* CCControl::dispatchListforControlEvent(CCControlEvent controlEvent)
+CCArray* CCControl::dispatchListforControlEvent(CCControlEvent controlEvent)
 {
-	CCMutableArray<CCInvocation*> *invocationList=dispatchTable->objectForKey(controlEvent);
+	CCArray *invocationList=(CCArray *)dispatchTable->objectForKey(controlEvent);
 
     // If the invocation list does not exist for the  dispatch table, we create it
     if (invocationList == NULL)
     {
-		invocationList=new CCMutableArray<CCInvocation*>();        
+		invocationList=new CCArray();        
 		dispatchTable->setObject(invocationList, controlEvent);
     }    
     return invocationList;

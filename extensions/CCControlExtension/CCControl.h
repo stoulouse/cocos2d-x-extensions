@@ -86,6 +86,18 @@ class CCControl : public CCLayer, public CCRGBAProtocol
 	CC_PROPERTY_PASS_BY_REF(ccColor3B, m_tColor, Color);
 	CC_PROPERTY(bool, m_bIsOpacityModifyRGB, IsOpacityModifyRGB);
 
+	virtual void setOpacityModifyRGB(bool bValue)
+	{
+		ccColor3B oldColor    = this->m_tColor;
+		m_bIsOpacityModifyRGB = bValue;
+		this->m_tColor        = oldColor;
+	}
+	virtual bool isOpacityModifyRGB()
+	{
+		return m_bIsOpacityModifyRGB;
+	}
+
+	
 	/** Changes the priority of the button. The lower the number, the higher the priority. */
 	CC_SYNTHESIZE(int, m_nDefaultTouchPriority, DefaultTouchPriority);
 	/** The current control state constant. */
@@ -98,7 +110,7 @@ class CCControl : public CCLayer, public CCRGBAProtocol
 	CC_SYNTHESIZE(bool, m_bHighlighted, IsHighlighted);
     
     protected:
-    CCMutableDictionary<CCControlState,CCMutableArray<CCInvocation*>*>   *dispatchTable;
+    CCDictionary   *dispatchTable;
 
 
 
@@ -167,6 +179,7 @@ public:
 	*/
 	virtual bool isTouchInside(CCTouch * touch);
 
+	virtual bool hasVisibleParents();
 
 protected:
 	/**
@@ -195,12 +208,12 @@ protected:
 	*
 	* @return the CCInvocation list for the given control event.
 	*/
-	CCMutableArray<CCInvocation*>* dispatchListforControlEvent(CCControlEvent controlEvent);
+	CCArray* dispatchListforControlEvent(CCControlEvent controlEvent);
 
 	void addTargetWithActionForControlEvent(CCObject* target, SEL_MenuHandler action, CCControlEvent controlEvent);
 	void removeTargetWithActionForControlEvent(CCObject* target, SEL_MenuHandler action, CCControlEvent controlEvent);
 
-	LAYER_NODE_FUNC(CCControl);
+//	NODE_FUNC(CCControl);
 
 };
 
