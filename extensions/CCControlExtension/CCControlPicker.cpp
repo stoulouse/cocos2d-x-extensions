@@ -90,7 +90,7 @@ CCControlPicker* CCControlPicker::initWithForegroundSpriteSelectionSprite(CCNode
         cacheRowSize                       = CCSizeMake(CCControlPickerDefaultRowWidth,
                                                          CCControlPickerDefaultRowHeight);
         swipeOrientation                   = CCControlPickerOrientationVertical;
-//        looping                            = false;
+        looping                            = false;
         
         CCPoint center                      = ccp (getContentSize().width / 2, getContentSize().height /2);
 		foregroundSprite->setContentSize(getContentSize());
@@ -394,7 +394,7 @@ void CCControlPicker::needsLayoutWithRowCount(unsigned int rowCount)
 		_rowLayout.push_back( RowInfos( position, row ) );
 	}
     
-    if (looping)
+    if (0 && looping)
     {
         CCSize pickerSize = getContentSize();
         int numberOfRowToLoop = 0;
@@ -484,7 +484,7 @@ CCPoint CCControlPicker::positionWithTranslationForLayerPosition(CCPoint transla
 																			  limitBounds.origin.y,
 																			  limitBounds.size.height);
         
-        if (looping)
+        if (0 && looping)
         {
             if (position.y < limitBounds.origin.y)
             {
@@ -503,7 +503,7 @@ CCPoint CCControlPicker::positionWithTranslationForLayerPosition(CCPoint transla
 																			  limitBounds.origin.x,
 																			  limitBounds.size.width);
         
-        if (looping)
+        if (0 && looping)
         {
             if (position.x < limitBounds.origin.x)
             {
@@ -523,7 +523,7 @@ CCPoint CCControlPicker::positionWithTranslationForLayerPosition(CCPoint transla
 double CCControlPicker::adjustTranslationForAxisValueUsingMinBoundMaxBound(double tranlation, double axis, double min, double max)
 {
     // If the picker is not circular we check if we have reached an edge
-    if (!looping && isValueOutOfMinBoundMaxBound(axis, min, max))
+    if ((1 || !looping) && isValueOutOfMinBoundMaxBound(axis, min, max))
     {
         double d1       = fabsf(min - axis);
         double d2       = fabsf(max - axis);
