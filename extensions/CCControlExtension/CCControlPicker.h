@@ -13,6 +13,7 @@ typedef enum
 
 class CCControlPickerDataSource;
 class CCControlPickerDelegate;
+class CCControlPickerRow;
 
 /**
  * Picker control for Cocos2D.
@@ -181,7 +182,7 @@ public:
 	 * (component) to the new value; if you specify NO, the new selection
 	 * is shown immediately.
 	 */
-	void selectRow(unsigned int row, bool animated);
+	void selectRow(unsigned int row, bool animated, bool sendCallback = false);
 	
 	/**
 	 * Returns the index of the selected row.
@@ -235,7 +236,17 @@ public:
 	void updateMoveWithActionLocation(CCPoint location);
 	void endMoveWithActionLocation(CCPoint location);
 	
+	struct RowInfos {
+		RowInfos(CCPoint p, CCControlPickerRow* r = 0) : _position(p), _rowNode(r) {}
+		CCPoint _position;
+		CCControlPickerRow* _rowNode;
+	};
+	std::vector< RowInfos > _rowLayout;
+	CCArray* _availableRows;
+//	std::vector< CCControlPickerRow* > _visibleRows;
+	void updateVisibleRows();
 	
+	CCControlPickerRow* dequeueUnusedControlPickerRow();
 };
 
 #pragma mark - CCControlPickerRowDelegate
@@ -309,6 +320,8 @@ public:
 	/** Creates a simple row node with the content title. */
 	static CCControlPickerRow* rowWithTitle(const std::string& title);
 	
+	virtual void setTitle(const std::string& title);
+
 #pragma mark Managing Text as Row Content
 	/** @name Managing Text as Row Content */
 	

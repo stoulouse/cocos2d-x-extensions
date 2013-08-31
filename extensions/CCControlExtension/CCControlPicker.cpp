@@ -37,12 +37,15 @@ CCControlPicker::CCControlPicker() {
 	rowsLayer = 0;
 	_foregroundSprite = 0;
 	_selectionSprite = 0;
+	_availableRows = new CCArray();
 }
 CCControlPicker::~CCControlPicker()
 {
 //    SAFE_ARC_RELEASE(_previousDate);
 //	CC_SAFE_RELEASE(rowsLayer);
     CC_SAFE_RELEASE(background);
+	
+	CC_SAFE_RELEASE(_availableRows);
     
 //    SAFE_ARC_SUPER_DEALLOC();
 }
@@ -87,7 +90,7 @@ CCControlPicker* CCControlPicker::initWithForegroundSpriteSelectionSprite(CCNode
         cacheRowSize                       = CCSizeMake(CCControlPickerDefaultRowWidth,
                                                          CCControlPickerDefaultRowHeight);
         swipeOrientation                   = CCControlPickerOrientationVertical;
-        looping                            = false;
+//        looping                            = false;
         
         CCPoint center                      = ccp (getContentSize().width / 2, getContentSize().height /2);
 		foregroundSprite->setContentSize(getContentSize());
@@ -172,21 +175,28 @@ void CCControlPicker::visit()
 
 void CCControlPicker::update(float delta)
 {
-    if (!decelerating)
+	if (rowsLayer->numberOfRunningActions() > 0)
+		updateVisibleRows();
+
+	if (!decelerating) {
         return;
+	}
     
     if (velocity.y <= 30.0f && velocity.y >= -30.0f)
     {
         decelerating           = false;
         
         unsigned int rowNumber    = rowNumberAtLocation(rowsLayer->getPosition());
-        selectRow(rowNumber, true);
+        selectRow(rowNumber, true, true);
         return;
     }
     
     CCPoint tranlation      = ccp (velocity.x * delta, velocity.y * delta);
     rowsLayer->setPosition(     positionWithTranslationForLayerPosition(tranlation, rowsLayer->getPosition()) );
-    
+	
+	if (rowsLayer->numberOfRunningActions() <= 0)
+		updateVisibleRows();
+	
     sendPickerRowEventForPosition(rowsLayer->getPosition());
     
     // Update the new velocity
@@ -238,7 +248,7 @@ void CCControlPicker::reloadComponent()
     needsLayoutWithRowCount(cachedRowCount);
 }
 
-void CCControlPicker::selectRow(unsigned int row, bool animated)
+void CCControlPicker::selectRow(unsigned int row, bool animated, bool sendCallback)
 {
 	if (!rowsLayer)
 		return;
@@ -256,23 +266,90 @@ void CCControlPicker::selectRow(unsigned int row, bool animated)
     if (highlightRow != _selectedRow && highlightRow != -1)
     {
         CCControlPickerRowDelegate* rowNode  = dynamic_cast<CCControlPickerRowDelegate*>(rowsLayer->getChildByTag(_selectedRow));
-        rowNode->rowDidDownplayed();
+		if (rowNode)
+			rowNode->rowDidDownplayed();
     }
     CCControlPickerRowDelegate* rowNode  = dynamic_cast<CCControlPickerRowDelegate*>(rowsLayer->getChildByTag(_selectedRow));
-    rowNode->rowWillBeSelected();
+	if (rowNode)
+		rowNode->rowWillBeSelected();
     highlightRow   = -1;
     
     if (animated)
     {
-        rowsLayer->runAction(CCSequence::create(
-												CCEaseInOut::create(
-																	
-																							 CCMoveTo::create(0.2f, dest), 1.0f),
-												CCCallFunc::create(this, callfunc_selector(CCControlPicker::sendSelectedRowCallback)),0));
-    } else
-    {
-        sendSelectedRowCallback();
+		if (sendCallback) {
+			rowsLayer->runAction(CCSequence::create(
+													CCEaseInOut::create(
+																		
+																		CCMoveTo::create(0.2f, dest), 1.0f),
+													CCCallFunc::create(this, callfunc_selector(CCControlPicker::updateVisibleRows)),
+													CCCallFunc::create(this, callfunc_selector(CCControlPicker::sendSelectedRowCallback)),0));
+		} else {
+			rowsLayer->runAction(CCSequence::create(
+													CCEaseInOut::create(
+																		CCMoveTo::create(0.2f, dest), 1.0f),
+													CCCallFunc::create(this, callfunc_selector(CCControlPicker::updateVisibleRows)),
+													0));
+		}
+    } else {
+		updateVisibleRows();
+		
+		if (sendCallback) {
+			sendSelectedRowCallback();
+		}
     }
+}
+
+CCControlPickerRow* CCControlPicker::dequeueUnusedControlPickerRow() {
+	CCControlPickerRow* result = 0;
+	if (_availableRows->count() > 0) {
+		result = dynamic_cast<CCControlPickerRow*>(_availableRows->lastObject());
+	}
+	return result;
+}
+
+void CCControlPicker::updateVisibleRows() {
+	CCPoint center      = ccp (0.0f, getContentSize().height + cacheRowSize.height / 2.0f);
+	unsigned int firstRow = rowNumberAtLocation(ccpAdd(rowsLayer->getPosition(), ccpSub(CCPointZero, center)));
+
+	const int visibleRowCount = ceilf(getContentSize().height / cacheRowSize.height) + 2;
+
+    center      = ccp (getContentSize().width / 2, getContentSize().height /2);
+	
+	int allocatedNode = 0;
+	
+    for (unsigned int i = 0; i < _rowLayout.size(); ++i)
+    {
+		RowInfos& rowInfo = _rowLayout[i];
+		
+		if (rowInfo._rowNode)
+			++allocatedNode;
+		
+        CCPoint position        = rowInfo._position;
+		
+		CCControlPickerRow *row = 0;
+		
+		if (i >= firstRow && i <= firstRow + visibleRowCount) {
+			if (!rowInfo._rowNode) {
+				row = dataSource->controlPickerNodeForRow(this, i);
+				if (row) {
+					rowsLayer->addChild(row, 1, i);
+					_availableRows->removeObject(row);
+				
+					row->setTag(i);
+					row->fitRowInSize(cacheRowSize);
+					row->setAnchorPoint( ccp(0.5f, 0.5f) );
+					row->setPosition( position );
+				}
+				rowInfo._rowNode = row;
+			}
+		} else {
+			if (rowInfo._rowNode) {
+				_availableRows->addObject( rowInfo._rowNode );
+				rowsLayer->removeChild(rowInfo._rowNode, true);
+				rowInfo._rowNode = 0;
+			}
+		}
+	}	
 }
 
 int CCControlPicker::selectedRow()
@@ -291,21 +368,31 @@ void CCControlPicker::needsLayoutWithRowCount(unsigned int rowCount)
         cacheRowSize   = delegate->rowSizeForControlPicker(this);
     }
     
+	const int visibleRowCount = ceilf(getContentSize().height / cacheRowSize.height) + 2;
+	
+	_rowLayout.clear();
+	rowsLayer->removeAllChildrenWithCleanup(true);
+	
     for (unsigned int i = 0; i < rowCount; i++)
     {
-        CCControlPickerRow *row     = dataSource->controlPickerNodeForRow(this, i);
-        row->fitRowInSize(cacheRowSize);
-        row->setAnchorPoint( ccp(0.5f, 0.5f) );
-//		row->ignoreAnchorPointForPosition(true);
-        rowsLayer->addChild(row, 1, i);
-        
         CCPoint position        = center;
         if (swipeOrientation == CCControlPickerOrientationVertical)
             position.y          += -cacheRowSize.height * i;
         else
             position.x          += cacheRowSize.width * i;
-        row->setPosition( position );
-    }
+
+		CCControlPickerRow *row = 0;
+		
+//		if (i < visibleRowCount) {
+//			row = dataSource->controlPickerNodeForRow(this, i);
+//			row->fitRowInSize(cacheRowSize);
+//			row->setAnchorPoint( ccp(0.5f, 0.5f) );
+//			rowsLayer->addChild(row, 1, i);
+//			row->setPosition( position );
+//		}
+    
+		_rowLayout.push_back( RowInfos( position, row ) );
+	}
     
     if (looping)
     {
@@ -347,7 +434,7 @@ void CCControlPicker::needsLayoutWithRowCount(unsigned int rowCount)
                                  0,
                                  cacheRowSize.height * (cachedRowCount - 1));
     
-    selectRow(0, false);
+    selectRow(0, false, false);
 }
 
 bool CCControlPicker::isValueOutOfMinBoundMaxBound(double value, double min, double max)
@@ -470,7 +557,7 @@ void CCControlPicker::setContentSize(const CCSize & size)
 	}
 	reloadComponent();
 	if (_selectedRow != -1)
-		selectRow(selectedRow(), false);
+		selectRow(selectedRow(), false, false);
 }
 
 void CCControlPicker::sendSelectedRowCallback()
@@ -482,7 +569,8 @@ void CCControlPicker::sendSelectedRowCallback()
     
     // Notifie the row
     CCControlPickerRowDelegate* rowNode  = dynamic_cast<CCControlPickerRowDelegate*>(rowsLayer->getChildByTag(_selectedRow));
-    rowNode->rowDidSelected();
+	if (rowNode)
+		rowNode->rowDidSelected();
 }
 
 void CCControlPicker::sendPickerRowEventForPosition(CCPoint location)
@@ -495,12 +583,14 @@ void CCControlPicker::sendPickerRowEventForPosition(CCPoint location)
         if (highlightRow != -1)
         {
             rowNode     = dynamic_cast<CCControlPickerRowDelegate*>(rowsLayer->getChildByTag(highlightRow));
-            rowNode->rowDidDownplayed();
+			if (rowNode)
+				rowNode->rowDidDownplayed();
         }
         
         highlightRow               = nhighlightRow;
 		rowNode     = dynamic_cast<CCControlPickerRowDelegate*>(rowsLayer->getChildByTag(highlightRow));
-        rowNode->rowDidHighlighted();
+		if (rowNode)
+			rowNode->rowDidHighlighted();
     }
 }
 
@@ -525,6 +615,7 @@ void CCControlPicker::initMoveWithActionLocation(CCPoint location)
     // Update the cell layer position
     CCPoint translation = ccpSub(previousLocation, location);
     rowsLayer->setPosition( positionWithTranslationForLayerPosition(translation, rowsLayer->getPosition() ) );
+	updateVisibleRows();
 }
 
 void CCControlPicker::updateMoveWithActionLocation(CCPoint location)
@@ -532,7 +623,8 @@ void CCControlPicker::updateMoveWithActionLocation(CCPoint location)
     // Update the cell layer position
     CCPoint translation     = ccpSub(location, previousLocation);
     rowsLayer->setPosition(     positionWithTranslationForLayerPosition(translation, rowsLayer->getPosition() ) );
-    
+    updateVisibleRows();
+	
     // Sends the picker's row event
     sendPickerRowEventForPosition(rowsLayer->getPosition());
     
@@ -592,12 +684,15 @@ void CCControlPicker::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
 {
     CCPoint touchLocation   = pTouch->getLocation();
     touchLocation           = CCDirector::sharedDirector()->convertToGL(touchLocation);
+    CCPoint localTouchLocation           = convertToNodeSpace(pTouch->getLocation());
     touchLocation           = getParent()->convertToNodeSpace(touchLocation);
     
 	if (pTouch->getTapCount() == 1) {
-		CCPoint center      = ccp (0.0f, getContentSize().height + cacheRowSize.height / 2.0f);
-		unsigned int nhighlightRow = rowNumberAtLocation(ccpAdd(rowsLayer->getPosition(), ccpSub(touchLocation, center)));
-		selectRow(nhighlightRow, true);
+		CCPoint center      = ccp (0.0f, getContentSize().height - cacheRowSize.height / 2.0f);
+		
+		CCPoint touchPos = CCPointMake(rowsLayer->getPosition().x + getContentSize().width / 2.0f, rowsLayer->getPosition().y - (localTouchLocation.y - getContentSize().height / 2.0f));
+		unsigned int nhighlightRow = rowNumberAtLocation(touchPos);
+		selectRow(nhighlightRow, true, true);
 	} else {
 		endMoveWithActionLocation(touchLocation);		
 	}
@@ -661,6 +756,12 @@ CCControlPickerRow* CCControlPickerRow::rowWithTitle(const std::string &title)
 	row->autorelease();
     return row;
 }
+
+void CCControlPickerRow::setTitle(const std::string& title) {
+	if (textLabel)
+		textLabel->setString( title.c_str() );
+}
+
 
 #pragma mark Properties
 
