@@ -156,18 +156,18 @@ void CCControlPicker::visit()
 	if (!isVisible())
         return;
     
-    glEnable(GL_SCISSOR_TEST);
-    
     CCPoint worldOrg    = convertToWorldSpace(ccp(0, 0));
     CCPoint dest        = convertToWorldSpace(ccp(getContentSize().width, getContentSize().height));
     CCPoint dims        = ccpSub(dest, worldOrg);
     
+	glEnable(GL_SCISSOR_TEST);
+		
     CCRect scissorRect  = CCRectMake(worldOrg.x, worldOrg.y, dims.x, dims.y);
     scissorRect         = CC_RECT_POINTS_TO_PIXELS(scissorRect);
     
     glScissor(scissorRect.origin.x, scissorRect.origin.y,
               scissorRect.size.width, scissorRect.size.height);
-    
+
 	superClass::visit();
     
 	glDisable(GL_SCISSOR_TEST);
@@ -311,7 +311,7 @@ void CCControlPicker::updateVisibleRows() {
 	CCPoint center      = ccp (0.0f, getContentSize().height + cacheRowSize.height / 2.0f);
 	unsigned int firstRow = rowNumberAtLocation(ccpAdd(rowsLayer->getPosition(), ccpSub(CCPointZero, center)));
 
-	const int visibleRowCount = ceilf(getContentSize().height / cacheRowSize.height) + 2;
+	const int visibleRowCount = ceilf(getContentSize().height / cacheRowSize.height) + 3;
 
     center      = ccp (getContentSize().width / 2, getContentSize().height /2);
 	
@@ -540,6 +540,8 @@ double CCControlPicker::adjustTranslationForAxisValueUsingMinBoundMaxBound(doubl
 void CCControlPicker::setContentSize(const CCSize & size)
 {
 	superClass::setContentSize(size);
+	if (size.equals( CCSizeZero ))
+		return;
 
 	CCPoint center                      = ccp (size.width / 2, size.height /2);
 
