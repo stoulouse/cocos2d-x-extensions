@@ -32,7 +32,7 @@
 #include "cocos2d.h"
 #include "CCControl.h"
 #include "CCInvocation.h"
-#include "CCScale9Sprite/CCScale9Sprite.h"
+#include "../CCScale9Sprite/CCScale9Sprite.h"
 
 USING_NS_CC;
 
@@ -69,10 +69,10 @@ protected:
 	/** Flag to know if the button is currently pushed.  */
 	CC_SYNTHESIZE_READONLY(bool, pushed, IsPushed); 
 
-	CCMutableDictionary<CCControlState, CCString*>* m_titleDispatchTable;
-	CCMutableDictionary<CCControlState, CCColor3bObject*>* m_titleColorDispatchTable;
-	CCMutableDictionary<CCControlState, CCNode*>* m_titleLabelDispatchTable;
-	CCMutableDictionary<CCControlState, CCScale9Sprite*>* m_backgroundSpriteDispatchTable;
+	CCDictionary* m_titleDispatchTable;
+	CCDictionary* m_titleColorDispatchTable;
+	CCDictionary* m_titleLabelDispatchTable;
+	CCDictionary* m_backgroundSpriteDispatchTable;
 
 	/* Define the button margin for Top/Bottom edge */
 	CC_SYNTHESIZE_READONLY(int, m_marginV, VerticalMargin);
@@ -86,8 +86,8 @@ public:
 	virtual bool initWithLabelAndBackgroundSprite(CCNode* label, CCScale9Sprite* backgroundSprite);
 	static CCControlButton* buttonWithLabelAndBackgroundSprite(CCNode* label, CCScale9Sprite* backgroundSprite);	
 	
-	virtual bool initWithTitleAndFontNameAndFontSize(string title, const char * fontName, float fontSize);
-	static CCControlButton* buttonWithTitleAndFontNameAndFontSize(string title, const char * fontName, float fontSize);
+	virtual bool initWithTitleAndFontNameAndFontSize(std::string title, const char * fontName, float fontSize);
+	static CCControlButton* buttonWithTitleAndFontNameAndFontSize(std::string title, const char * fontName, float fontSize);
 	
 	virtual bool initWithBackgroundSprite(CCScale9Sprite* sprite);
 	static CCControlButton* buttonWithBackgroundSprite(CCScale9Sprite* sprite);
