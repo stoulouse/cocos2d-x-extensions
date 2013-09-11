@@ -100,6 +100,8 @@ public:
 	 * @param capInsets The values to use for the cap insets.
 	 */
 	virtual bool initWithFile(const char* file, const CCRect& rect,  const CCRect& capInsets);
+
+	virtual bool initWithTexture(CCTexture2D* tex, const CCRect& rect,  const CCRect& capInsets);
 	
 	/** 
 	 * Creates a 9-slice sprite with a texture file, a delimitation zone and
@@ -122,6 +124,8 @@ public:
 	 * texture's full rect.
 	 */
 	virtual bool initWithFile(const char* file, const CCRect& rect);
+
+	virtual bool initWithTexture(CCTexture2D* tex, const CCRect& rect);
 	
 	/** 
 	 * Creates a 9-slice sprite with a texture file and a delimitation zone. The
@@ -142,6 +146,8 @@ public:
 	 * @param capInsets The values to use for the cap insets.
 	 */
 	virtual bool initWithFile(const CCRect& capInsets, const char* file);
+
+	virtual bool initWithTexture(const CCRect& capInsets, CCTexture2D* file);
 	
 	/** 
 	 * Creates a 9-slice sprite with a texture file. The whole texture will be
@@ -161,6 +167,8 @@ public:
 	 * @param file The name of the texture file.
 	 */
 	virtual bool initWithFile(const char* file);
+
+	virtual bool initWithTexture(CCTexture2D* file);
 	
 	/** 
 	 * Creates a 9-slice sprite with a texture file. The whole texture will be

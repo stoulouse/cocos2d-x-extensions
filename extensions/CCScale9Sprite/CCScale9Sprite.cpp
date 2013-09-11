@@ -188,6 +188,15 @@ bool CCScale9Sprite::initWithFile(const char* file, const CCRect& rect,  const C
     return pReturn;
 }
 
+bool CCScale9Sprite::initWithTexture(CCTexture2D* tex, const CCRect& rect,  const CCRect& capInsets)
+{
+	CCAssert(tex != NULL, "Invalid file for sprite");
+    
+    CCSpriteBatchNode *batchnode = CCSpriteBatchNode::createWithTexture(tex, 9);
+    bool pReturn = this->initWithBatchNode(batchnode, rect, capInsets);
+    return pReturn;
+}
+
 CCScale9Sprite* CCScale9Sprite::spriteWithFile(const char* file, const CCRect& rect,  const CCRect& capInsets)
 {
 	CCScale9Sprite* pReturn = new CCScale9Sprite();
@@ -205,6 +214,13 @@ bool CCScale9Sprite::initWithFile(const char* file, const CCRect& rect)
     bool pReturn = this->initWithFile(file, rect, CCRectZero);
     return pReturn;
 }
+
+bool CCScale9Sprite::initWithTexture(CCTexture2D* file, const CCRect& rect)
+{
+    bool pReturn = this->initWithTexture(file, rect, CCRectZero);
+    return pReturn;
+}
+
 CCScale9Sprite* CCScale9Sprite::spriteWithFile(const char* file, const CCRect& rect)
 {
 	CCScale9Sprite* pReturn = new CCScale9Sprite();
@@ -221,6 +237,12 @@ CCScale9Sprite* CCScale9Sprite::spriteWithFile(const char* file, const CCRect& r
 bool CCScale9Sprite::initWithFile(const CCRect& capInsets, const char* file)
 {
     bool pReturn = this->initWithFile(file, CCRectZero, capInsets);
+    return pReturn;
+}
+
+bool CCScale9Sprite::initWithTexture(const CCRect& capInsets, CCTexture2D* file)
+{
+    bool pReturn = this->initWithTexture(file, CCRectZero, capInsets);
     return pReturn;
 }
 
@@ -242,6 +264,14 @@ bool CCScale9Sprite::initWithFile(const char* file)
     return pReturn;
 	
 }
+
+bool CCScale9Sprite::initWithTexture(CCTexture2D* file)
+{
+    bool pReturn = this->initWithTexture(file, CCRectZero);
+    return pReturn;
+	
+}
+
 CCScale9Sprite* CCScale9Sprite::spriteWithFile(const char* file)
 {
 	CCScale9Sprite* pReturn = new CCScale9Sprite();
