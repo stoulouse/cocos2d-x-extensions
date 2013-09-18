@@ -641,6 +641,7 @@ void CCControlPicker::updateMoveWithActionLocation(CCPoint location)
     double delta_time       = (now.tv_usec - previousDate) / 10000000.0f;
     CCPoint delta_position  = ccpSub(location, previousLocation);
     velocity               = ccp(delta_position.x / delta_time, delta_position.y / delta_time);
+	CCAssert(!isinf(velocity.x) && !isinf(velocity.y), "error velocity");
     
     // Update the previous location and date
     previousLocation       = location;

@@ -120,7 +120,7 @@ CCControlButton* CCControlButton::buttonWithLabelAndBackgroundSprite(CCNode* lab
 
 bool CCControlButton::initWithTitleAndFontNameAndFontSize(std::string title, const char * fontName, float fontSize)
 {
-	CCLabelTTF *label = CCLabelTTF::labelWithString(title.c_str(), fontName, fontSize);
+	CCLabelTTF *label = CCLabelTTF::create(title.c_str(), fontName, fontSize);
 	//TODO: return correct value
 	//return initWithLabelAndBackgroundSprite(label, CCScale9Sprite::node());
 	return NULL;
